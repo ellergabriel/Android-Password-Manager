@@ -9,9 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Knox">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/service_configuration" />
+
+        <service
+            android:name=".Requestor"
+            android:exported="true"
+            android:permission="android.permission.BIND_AUTOFILL_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.autofill.AutofillService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.autofill"
+                android:resource="@xml/service_configuration" />
+        </service>
+
         <activity
             android:name=".DebugActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
