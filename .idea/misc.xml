@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_main.xml" value="0.25815217391304346" />
+        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_debug.xml" value="0.33" />
+        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_display_message.xml" value="0.33" />
+        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_main.xml" value="0.33" />
       </map>
     </option>
   </component>
