@@ -30,6 +30,7 @@ public final class Requestor extends AutofillService{
     public static Requestor getInstance(){
         if(instance == null){
             instance = new Requestor();
+            timer = new Timer();
         }
         return instance;
     }
