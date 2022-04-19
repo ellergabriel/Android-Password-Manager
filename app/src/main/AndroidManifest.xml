@@ -13,6 +13,7 @@
             android:name="com.google.android.actions"
             android:resource="@xml/service_configuration" />
 
+        <!--Autofill service XML -->
         <service
             android:name=".Requestor"
             android:exported="true"
@@ -25,6 +26,7 @@
                 android:name="android.autofill"
                 android:resource="@xml/service_configuration" />
         </service>
+        <!-- end autofill service xml -->
 
         <activity
             android:name=".DebugActivity"
