@@ -54,7 +54,7 @@ public final class Requestor extends AutofillService {
         AssistStructure structure = context.get(context.size() - 1).getStructure();
 
         ParsedStructure parsedStruct = new ParsedStructure();
-        UserData userData = new UserData();
+        Credentials userData = new Credentials();
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
@@ -66,6 +66,7 @@ public final class Requestor extends AutofillService {
         passwordPresentation.setTextViewText(android.R.id.text1, "dummy password");
 
         //Adds dataset with credentials to response
+        /*
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                             .setValue(parsedStruct.userID,
@@ -75,7 +76,7 @@ public final class Requestor extends AutofillService {
                             .build())
                 .build();
 
-        fillCallback.onSuccess(fillResponse);
+        fillCallback.onSuccess(fillResponse);*/
     }
 
     @Override
@@ -127,9 +128,8 @@ public final class Requestor extends AutofillService {
      * @param parser
      * @param data
      */
-    private static void fetchUserData(ParsedStructure parser, UserData data){
-        data.userName = parser.userID.toString();
-        data.password = parser.passID.toString();
+    private static void fetchUserData(ParsedStructure parser, Credentials data){
+
     }
 
     /**
