@@ -28,27 +28,12 @@ public final class Requestor extends AutofillService {
     //Singleton creation pattern
     private static volatile Requestor instance = null;
     private static volatile Timer timer = null;
-    private volatile AutofillManager manager;
     public Requestor(){} //constructor must be public to implement autofill service
 
     @Override
     public void onFillRequest(@NonNull FillRequest fillRequest, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback fillCallback) {
         System.out.println("autofill shazbot\n");
-        manager = getSystemService(AutofillManager.class);
-        if(!manager.hasEnabledAutofillServices()){
-            //device does not support autofill; edge case to fill out later
-            if(!manager.isAutofillSupported()){
-                System.out.println("shazbot\n");
-                /**
-                 * no autofill on device; likely exit app or redirect to database for storage/creatoin
-                 */
-            } else {
-                //prompts user to enable autofill from settings
-                System.out.println("sad shazbot\n");
-                ActivityStarter starter = new ActivityStarter();
-                starter.startActivity(new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE));
-            }
-        }
+
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
         AssistStructure structure = context.get(context.size() - 1).getStructure();

@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.knox.R;
+import com.example.knox.databinding.FragmentDashboardBinding;
 
 public class DebugFragment extends Fragment {
 
@@ -26,6 +28,10 @@ public class DebugFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(DebugViewModel.class);
+        FragmentDashboardBinding binding  = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        //final TextView text = binding.
         return inflater.inflate(R.layout.debug_fragment, container, false);
     }
 
