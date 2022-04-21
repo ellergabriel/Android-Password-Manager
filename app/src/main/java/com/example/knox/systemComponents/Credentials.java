@@ -1,4 +1,4 @@
-package com.example.knox;
+package com.example.knox.systemComponents;
 
 public class Credentials {
     private String uName;

@@ -1,4 +1,4 @@
-package com.example.knox;
+package com.example.knox.systemComponents;
 
 public final class Database {
     private static volatile Database instance = null;

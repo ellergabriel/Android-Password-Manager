@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:autofillHints="@android:string/autofill"
-    tools:context=".DebugActivity">
+    tools:context=".activities.DebugActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
@@ -24,6 +24,7 @@
         android:layout_marginBottom="284dp"
         android:autofillHints="@string/password"
         android:ems="10"
+        android:hint="@string/password_prompt"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:visibility="visible"

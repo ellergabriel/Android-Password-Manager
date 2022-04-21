@@ -1,4 +1,4 @@
-package com.example.knox;
+package com.example.knox.systemComponents;
 
 import androidx.biometric.*;
 
@@ -15,7 +15,7 @@ public final class Validator {
 
     /**
      * Method ensures user has proper biometric authentication enabled
-     * @param context When calling the method, pass in the current
+     * @param context When calling the method, pass in the current context
      */
     private void checkBioMetricSupported(Context context){
         String info = "";
