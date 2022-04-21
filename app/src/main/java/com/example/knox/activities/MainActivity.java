@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.knox.R;
+import com.example.knox.VaultActivity;
 import com.example.knox.systemComponents.Validator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded, welcome back", Toast.LENGTH_SHORT).show();
                 isValidated = true;
-                debugMode();
+                vaultMode();
             }
 
             @Override
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void vaultMode(){
+        Intent intent = new Intent(this, VaultActivity.class);
+        startActivity(intent);
     }
 
 }
