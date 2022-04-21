@@ -16,7 +16,7 @@
 
         <!--Autofill service XML -->
         <service
-            android:name=".Requestor"
+            android:name=".systemComponents.Requestor"
             android:exported="true"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE">
             <intent-filter>
@@ -30,10 +30,10 @@
         <!-- end autofill service xml -->
 
         <activity
-            android:name=".DebugActivity"
+            android:name=".activities.DebugActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

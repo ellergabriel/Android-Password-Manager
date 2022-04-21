@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/drawable/ic_baseline_fingerprint.xml" value="0.13" />
+        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2375" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_debug.xml" value="0.33" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_display_message.xml" value="0.33" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/debug_fragment2.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
         <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/GE/AndroidStudioProjects/Knox/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
       </map>
     </option>
   </component>
