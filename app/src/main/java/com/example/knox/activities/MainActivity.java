@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        */
 
         //check for autofill enabled on startup
         AutofillManager manager = getSystemService(AutofillManager.class);
@@ -81,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),
-                        "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                        "Authentication succeeded, welcome back", Toast.LENGTH_SHORT).show();
                 isValidated = true;
-                debugMode(findViewById(R.id.debug_button));
+                debugMode();
             }
 
             @Override
@@ -108,9 +110,12 @@ public class MainActivity extends AppCompatActivity {
         //Validator.getInstance().createPrompt(this);
     }
 
-    public void debugMode(View view){
+    public void debugMode(){
         Intent intent = new Intent(this, DebugActivity.class);
         startActivity(intent);
+    }
+
+    public void vaultMode(){
     }
 
 }
