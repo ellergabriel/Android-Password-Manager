@@ -6,5 +6,4 @@
     <string name="user_name">Username</string>
     <string name="password_prompt">Password</string>
     <string name="debug_mode">Debug Mode</string>
-    <string name="password">password</string>
 </resources>
