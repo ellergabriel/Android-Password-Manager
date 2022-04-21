@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.knox.R;
+import com.example.knox.systemComponents.Validator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
+    private boolean isValidated = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        //Validator.getInstance().createPrompt(this);
+
         //Biometric prompt to user before accessing rest of app
+
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {
@@ -77,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                isValidated = true;
+                debugMode(findViewById(R.id.debug_button));
             }
 
             @Override
@@ -97,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         biometricLogin.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
         });
+
+        //Validator.getInstance().createPrompt(this);
     }
 
     public void debugMode(View view){
@@ -104,7 +113,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void bioCheck(View view){
-        //Intent intent = new Intent(this, )
-    }
 }
