@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.knox">
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"></uses-permission>
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:allowBackup="true"
@@ -10,11 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Knox">
+
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/service_configuration" />
-
-        <!--Autofill service XML -->
+            android:resource="@xml/service_configuration" /> <!-- Autofill service XML -->
         <service
             android:name=".systemComponents.Requestor"
             android:exported="true"
@@ -26,9 +26,7 @@
             <meta-data
                 android:name="android.autofill"
                 android:resource="@xml/service_configuration" />
-        </service>
-        <!-- end autofill service xml -->
-
+        </service> <!-- end autofill service xml -->
         <activity
             android:name=".activities.DebugActivity"
             android:exported="false" />
