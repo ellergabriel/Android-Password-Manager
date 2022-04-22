@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Knox">
         <activity
-            android:name=".VaultActivity"
+            android:name=".activities.VaultActivity"
             android:exported="false" />
 
         <meta-data
