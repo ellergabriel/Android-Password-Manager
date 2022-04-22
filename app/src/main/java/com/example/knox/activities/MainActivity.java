@@ -1,29 +1,18 @@
 package com.example.knox.activities;
 
-import android.content.Context;
 import android.content.Intent;
-//import android.hardware.biometrics.BiometricPrompt;
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle;
-import android.view.View;
-
 import com.example.knox.R;
-import com.example.knox.VaultActivity;
-import com.example.knox.systemComponents.Validator;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.knox.databinding.ActivityMainBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
 import android.view.autofill.AutofillManager;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.example.knox.databinding.ActivityMainBinding;
 
 import java.util.concurrent.Executor;
 
@@ -37,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this is just a test
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

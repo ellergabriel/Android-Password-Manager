@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fra"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/vault_tab"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:title="@string/vault_tab"/>
 
-
+    <item
+        android:id="@+id/generation_tab"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/generation_tab"/>
 </menu>
