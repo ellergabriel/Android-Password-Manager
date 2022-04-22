@@ -29,21 +29,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        /*
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-        */
-
         //check for autofill enabled on startup
         AutofillManager manager = getSystemService(AutofillManager.class);
         if(!manager.hasEnabledAutofillServices()){
+            System.out.println("shazbot\n");
             //device does not support autofill; edge case to fill out later
             if(!manager.isAutofillSupported()){
                 //TODO: Autofill not supported on device; abort or redirect user
@@ -57,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Biometric prompt to user before accessing rest of app
 
+
+        //TODO: make Validator perform the following code
+        /*entire method is already written in the class, getting the prompt to display
+        * directly from main is the issue. Could be threading. */
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {
@@ -97,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Validator.getInstance().createPrompt(this);
+
+        Button debug = findViewById(R.id.debug_button);
+        debug.setOnClickListener(view -> {
+            debugMode();
+        });
     }
 
     public void debugMode(){

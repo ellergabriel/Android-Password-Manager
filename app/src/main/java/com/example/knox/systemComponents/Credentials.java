@@ -18,4 +18,10 @@ public class Credentials {
         passwd = pass;
         url = URL;
     }
+
+    public String getUName() {return uName;}
+    public String getPasswd(){return passwd;}
+
+    public void setuName(String name){uName = name;}
+    public void setPasswd(String pass){passwd = pass;}
 }

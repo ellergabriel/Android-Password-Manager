@@ -5,17 +5,24 @@ import java.util.Timer;
 import android.app.Activity;
 import android.app.assist.AssistStructure;
 import android.os.CancellationSignal;
+import android.os.Parcel;
 import android.service.autofill.AutofillService;
+import android.service.autofill.Dataset;
 import android.service.autofill.FillCallback;
 import android.service.autofill.FillContext;
 import android.service.autofill.FillRequest;
+import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
 import android.service.autofill.SaveRequest;
 import android.view.autofill.AutofillId;
+import android.view.autofill.AutofillManager;
+import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
 
 
 import androidx.annotation.NonNull;
+
+import com.example.knox.R;
 
 public final class Requestor extends AutofillService {
 
@@ -26,36 +33,36 @@ public final class Requestor extends AutofillService {
 
     @Override
     public void onFillRequest(@NonNull FillRequest fillRequest, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback fillCallback) {
-        System.out.println("autofill shazbot\n");
 
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
         AssistStructure structure = context.get(context.size() - 1).getStructure();
 
         ParsedStructure parsedStruct = new ParsedStructure();
-        Credentials userData = new Credentials();
+        Credentials userData = new Credentials("eller010", "password", " ");
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
         fetchUserData(parsedStruct, userData);
+        //Parcel id1 = null, id2 = null;
 
-        RemoteViews userNamePresentation = new RemoteViews(getPackageName(), android.R.layout.simple_list_item_1);
-        userNamePresentation.setTextViewText(android.R.id.text1, "dummy username");
-        RemoteViews passwordPresentation = new RemoteViews(getPackageName(), android.R.layout.simple_list_item_1);
-        passwordPresentation.setTextViewText(android.R.id.text1, "dummy password");
-
+        RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), R.id.TextEmailAddress);
+        //userNamePresentation.writeToParcel(id1, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), R.id.TextPassword);
+        //passwordPresentation.writeToParcel(id2, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+        //parsedStruct.userID = userNamePresentation.getViewId();
         //Adds dataset with credentials to response
-        /*
+
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                             .setValue(parsedStruct.userID,
-                                    AutofillValue.forText(userData.userName), userNamePresentation)
+                                    AutofillValue.forText(userData.getUName()), userNamePresentation)
                             .setValue(parsedStruct.passID,
-                                    AutofillValue.forText(userData.password), passwordPresentation)
+                                    AutofillValue.forText(userData.getPasswd()), passwordPresentation)
                             .build())
                 .build();
 
-        fillCallback.onSuccess(fillResponse);*/
+        fillCallback.onSuccess(fillResponse);
     }
 
     @Override
@@ -83,6 +90,7 @@ public final class Requestor extends AutofillService {
      */
     private static void parseStructure(AssistStructure struct, ParsedStructure parser){
         int nodes = struct.getWindowNodeCount();
+        //todo:
         for(int i = 0; i < nodes; i++){
             AssistStructure.WindowNode window = struct.getWindowNodeAt(i);
             AssistStructure.ViewNode view = window.getRootViewNode();
@@ -91,14 +99,13 @@ public final class Requestor extends AutofillService {
     }
 
     /**
-     *
+     * Helper function to parse through ViewNode information
      * @param viewNode
      * @param parser
      */
     private static void traverseNode(AssistStructure.ViewNode viewNode, ParsedStructure parser){
         if ((viewNode.getAutofillHints() != null) && (viewNode.getAutofillHints().length > 0)){
-            System.out.println("shazbot has hints\n");
-            //holder for now
+            //todo:
         }
     }
 
@@ -108,7 +115,7 @@ public final class Requestor extends AutofillService {
      * @param data
      */
     private static void fetchUserData(ParsedStructure parser, Credentials data){
-
+        //todo
     }
 
     /**
@@ -129,9 +136,7 @@ public final class Requestor extends AutofillService {
      * Autofill inheritance
      */
     class ActivityStarter extends Activity{
-        public ActivityStarter(){
-
-        }
+        public ActivityStarter(){ }
     }
 
 }
