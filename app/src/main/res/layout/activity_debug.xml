@@ -17,37 +17,73 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="284dp"
-        android:autofillHints="@string/password"
-        android:ems="10"
-        android:hint="@string/password_prompt"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints="@android:string/autofill"
-        android:ems="10"
-        android:hint="@string/user_name"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:text="@string/user_name"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/TextPassword"
+                android:layout_width="276dp"
+                android:layout_height="83dp"
+                android:autofillHints="password"
+                android:ems="10"
+                android:hint="@string/password_prompt"
+                android:importantForAutofill="yes"
+                android:importantForContentCapture="yes"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:password="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextEmailAddress" />
+
+            <EditText
+                android:id="@+id/TextEmailAddress"
+                android:layout_width="268dp"
+                android:layout_height="79dp"
+                android:autofillHints="username"
+                android:ems="10"
+                android:hint="@string/user_name"
+                android:importantForAutofill="yes"
+                android:importantForContentCapture="yes"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/TextPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/logButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:importantForAutofill="no|yes"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextPassword" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="316dp"
+                android:layout_height="128dp"
+                android:text="Login to exit Knox"
+                app:layout_constraintBottom_toTopOf="@+id/TextEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
