@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Biometric prompt to user before accessing rest of app
 
+
+        //TODO: make Validator perform the following code
+        /*entire method is already written in the class, getting the prompt to display
+        * directly from main is the issue. Could be threading. */
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {

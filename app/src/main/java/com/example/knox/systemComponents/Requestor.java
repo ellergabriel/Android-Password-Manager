@@ -44,7 +44,7 @@ public final class Requestor extends AutofillService {
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
         fetchUserData(parsedStruct, userData);
-        Parcel id1 = null, id2 = null;
+        //Parcel id1 = null, id2 = null;
 
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), R.id.TextEmailAddress);
         //userNamePresentation.writeToParcel(id1, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
@@ -90,6 +90,7 @@ public final class Requestor extends AutofillService {
      */
     private static void parseStructure(AssistStructure struct, ParsedStructure parser){
         int nodes = struct.getWindowNodeCount();
+        //todo:
         for(int i = 0; i < nodes; i++){
             AssistStructure.WindowNode window = struct.getWindowNodeAt(i);
             AssistStructure.ViewNode view = window.getRootViewNode();
@@ -98,13 +99,13 @@ public final class Requestor extends AutofillService {
     }
 
     /**
-     *
+     * Helper function to parse through ViewNode information
      * @param viewNode
      * @param parser
      */
     private static void traverseNode(AssistStructure.ViewNode viewNode, ParsedStructure parser){
         if ((viewNode.getAutofillHints() != null) && (viewNode.getAutofillHints().length > 0)){
-            //holder for now
+            //todo:
         }
     }
 
@@ -114,7 +115,7 @@ public final class Requestor extends AutofillService {
      * @param data
      */
     private static void fetchUserData(ParsedStructure parser, Credentials data){
-
+        //todo
     }
 
     /**
@@ -135,9 +136,7 @@ public final class Requestor extends AutofillService {
      * Autofill inheritance
      */
     class ActivityStarter extends Activity{
-        public ActivityStarter(){
-
-        }
+        public ActivityStarter(){ }
     }
 
 }

@@ -30,7 +30,7 @@ public class DebugActivity extends AppCompatActivity {
         Button logButton = findViewById(R.id.logButton);
 
         logButton.setOnClickListener(view ->{
-            System.out.println("holder\n");
+            //System.out.println("holder\n");
             if (user.getText().toString().equals("eller010") &&
                 pass.getText().toString().equals("password")){
                     //System.exit(0);

@@ -112,7 +112,6 @@ public final class Validator extends AppCompatActivity{
         Button scanner = customView.findViewById(R.id.bioButton);
         PopupWindow biometricLogin = new PopupWindow(customView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
         biometricLogin.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
-        //Button biometricLogin = findViewById(R.id.fp_button);
         scanner.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
         });

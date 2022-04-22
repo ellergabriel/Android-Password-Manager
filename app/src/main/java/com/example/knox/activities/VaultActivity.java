@@ -14,6 +14,7 @@ import com.example.knox.ui.generation.GenerationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+//Todo: make Credential list appear with correct title and editable
 public class VaultActivity extends AppCompatActivity {
 
     @Override
