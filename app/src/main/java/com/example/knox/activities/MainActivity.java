@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
-    private boolean isValidated = false;
+    private boolean isExit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +56,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),
-                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
-                        .show();
+                        if( ! (errString.equals("Fingerprint operation cancelled by user."))) {
+                            System.out.println("Back button tester\n");
+                        } else {
+                            //TODO: popup window with goodbye message as user has pressed 'Exit Knox'
+                            Toast.makeText(getApplicationContext(),
+                                    "Authentication error: " + errString, Toast.LENGTH_SHORT)
+                                    .show();
+                            System.exit(0);
+                        }
             }
 
             @Override
@@ -66,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),
                         "Authentication succeeded, welcome back", Toast.LENGTH_SHORT).show();
-                isValidated = true;
                 vaultMode();
             }
 
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
                 .setSubtitle("Log in with fingerprint")
-                .setNegativeButtonText("Use account password")
+                .setNegativeButtonText("Exit Knox")
                 .build();
 
         Button biometricLogin = findViewById(R.id.fp_button);
