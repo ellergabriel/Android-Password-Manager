@@ -45,7 +45,7 @@ public final class Requestor extends AutofillService {
         parseStructure(structure, parsedStruct);
         fetchUserData(parsedStruct, userData);
         //Parcel id1 = null, id2 = null;
-
+        /*
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), R.id.TextEmailAddress);
         //userNamePresentation.writeToParcel(id1, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), R.id.TextPassword);
@@ -63,6 +63,8 @@ public final class Requestor extends AutofillService {
                 .build();
 
         fillCallback.onSuccess(fillResponse);
+
+         */
     }
 
     @Override
@@ -99,13 +101,29 @@ public final class Requestor extends AutofillService {
     }
 
     /**
-     * Helper function to parse through ViewNode information
+     * Helper function to parse through ViewNode information via Children field
      * @param viewNode
      * @param parser
      */
     private static void traverseNode(AssistStructure.ViewNode viewNode, ParsedStructure parser){
-        if ((viewNode.getAutofillHints() != null) && (viewNode.getAutofillHints().length > 0)){
+        if (viewNode.getChildCount() > 0){
             //todo:
+            AssistStructure.ViewNode child;
+            for(int i = 0; i < viewNode.getChildCount(); i++){
+                child = viewNode.getChildAt(i);
+                String tester = child.getHint();
+                if(child.getChildCount() > 0){
+                    traverseNode(child, parser);//recursive call for now;
+                    //todo: implement queue when autofill is fully working
+                } else if(!(child.getAutofillHints() == null) || !(tester == null)){
+                    //text field has some hint, check for id
+                    if(child.getHint().equals("Username")){
+                        parser.userID = child.getAutofillId();
+                    } else if (child.getHint().equals("Password")){
+                        parser.passID = child.getAutofillId();
+                    }
+                }
+            }
         }
     }
 

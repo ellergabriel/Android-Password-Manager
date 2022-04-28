@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                        if( ! (errString.equals("Fingerprint operation cancelled by user."))) {
+                        if (("Fingerprint operation canceled by user.").equals(errString)) {
                             System.out.println("Back button tester\n");
                         } else {
                             //TODO: popup window with goodbye message as user has pressed 'Exit Knox'
