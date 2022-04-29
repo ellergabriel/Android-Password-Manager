@@ -33,40 +33,45 @@ public final class Requestor extends AutofillService {
 
     @Override
     public void onFillRequest(@NonNull FillRequest fillRequest, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback fillCallback) {
+        /*todo:check if session timer has ran out
+        if timer is out, show fingerprint prompt to user before continuing
+        else, keep it going*/
 
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
         AssistStructure structure = context.get(context.size() - 1).getStructure();
 
         ParsedStructure parsedStruct = new ParsedStructure();
-        Credentials userData = new Credentials("eller010", "password", " ");
+        //Credentials userData = new Credentials("eller010", "password", " ");
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
-        fetchUserData(parsedStruct, userData);
+        //fetchUserData(parsedStruct, userData);
         //Parcel id1 = null, id2 = null;
-        /*
-        RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), R.id.TextEmailAddress);
-        //userNamePresentation.writeToParcel(id1, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), R.id.TextPassword);
-        //passwordPresentation.writeToParcel(id2, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-        //parsedStruct.userID = userNamePresentation.getViewId();
+
+        RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        //todo: hardcoded credentials for testing purposes only
+        userNamePresentation.setTextViewText(android.R.id.text1,"eller010");
+        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        passwordPresentation.setTextViewText(android.R.id.text1, "password");
         //Adds dataset with credentials to response
 
+        //.todo: more hardcoded credentials; change after database is implemented
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                             .setValue(parsedStruct.userID,
-                                    AutofillValue.forText(userData.getUName()), userNamePresentation)
+                                    AutofillValue.forText("eller010"), userNamePresentation)
                             .setValue(parsedStruct.passID,
-                                    AutofillValue.forText(userData.getPasswd()), passwordPresentation)
+                                    AutofillValue.forText("password"), passwordPresentation)
                             .build())
                 .build();
 
         fillCallback.onSuccess(fillResponse);
 
-         */
+
     }
 
+    //todo: once database is implemented, make onSaveRequest encrypt and save to the database
     @Override
     public void onSaveRequest(@NonNull SaveRequest saveRequest, @NonNull SaveCallback saveCallback) {
 
@@ -114,7 +119,7 @@ public final class Requestor extends AutofillService {
                 String tester = child.getHint();
                 if(child.getChildCount() > 0){
                     traverseNode(child, parser);//recursive call for now;
-                    //todo: implement queue when autofill is fully working
+                    //todo: implement stack when autofill is fully working
                 } else if(!(child.getAutofillHints() == null) || !(tester == null)){
                     //text field has some hint, check for id
                     if(child.getHint().equals("Username")){

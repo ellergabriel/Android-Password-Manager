@@ -1,8 +1,18 @@
 package com.example.knox.systemComponents;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Credentials {
+    @ColumnInfo(name = "username")
     private String uName;
+
+    @ColumnInfo(name = "password")
     private String passwd;
+
+    @PrimaryKey
     private String url;
 
     public Credentials(){ }

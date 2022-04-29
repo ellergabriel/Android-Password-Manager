@@ -6,6 +6,7 @@ import androidx.biometric.BiometricPrompt;
 import android.os.Bundle;
 import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
+import com.example.knox.systemComponents.Requestor;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Validator.getInstance().createPrompt(this);
+
+        //create requestor object via singleton creation
+        Requestor.getInstance();
 
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
