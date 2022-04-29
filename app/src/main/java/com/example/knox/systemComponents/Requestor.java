@@ -45,11 +45,11 @@ public final class Requestor extends AutofillService {
         parseStructure(structure, parsedStruct);
         fetchUserData(parsedStruct, userData);
         //Parcel id1 = null, id2 = null;
-        /*
-        RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), R.id.TextEmailAddress);
-        //userNamePresentation.writeToParcel(id1, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), R.id.TextPassword);
-        //passwordPresentation.writeToParcel(id2, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+
+        RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        userNamePresentation.setTextViewText(android.R.id.text1, userData.getUName());
+        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        passwordPresentation.setTextViewText(android.R.id.text1, userData.getPasswd());
         //parsedStruct.userID = userNamePresentation.getViewId();
         //Adds dataset with credentials to response
 
@@ -63,8 +63,6 @@ public final class Requestor extends AutofillService {
                 .build();
 
         fillCallback.onSuccess(fillResponse);
-
-         */
     }
 
     @Override
