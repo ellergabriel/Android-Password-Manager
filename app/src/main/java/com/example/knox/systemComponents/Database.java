@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 //Todo: implement password generation algorithm
 @androidx.room.Database(entities = {Credentials.class}, version = 1)
 public abstract class Database extends RoomDatabase {
+    public abstract PasswordDAO passDao();
     private static volatile Database instance = null;
     private Database(){}
     public static Database getInstance(){
