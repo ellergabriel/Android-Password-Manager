@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         //Validator.getInstance().createPrompt(this);
 
         //Biometric prompt to user before accessing rest of app
-
-
         //TODO: make Validator perform the following code
         /*entire method is already written in the class, getting the prompt to display
         * directly from main is the issue. Could be threading. */
