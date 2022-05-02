@@ -1,5 +1,6 @@
 package com.example.knox.systemComponents;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,13 +8,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "credentials")
 public class Credentials {
     @ColumnInfo(name = "username")
-    private String uName;
+    public String uName;
 
     @ColumnInfo(name = "password")
-    private String passwd;
+    public String passwd;
 
     @PrimaryKey
-    private String url;
+    @NonNull
+    @ColumnInfo(name = "URL")
+    public String url;
 
     public Credentials(){ }
 
@@ -29,9 +32,18 @@ public class Credentials {
         url = URL;
     }
 
-    public String getUName() {return uName;}
-    public String getPasswd(){return passwd;}
+    public String getUName() {return this.uName;}
+    public String getPasswd(){return this.passwd;}
 
-    public void setuName(String name){uName = name;}
-    public void setPasswd(String pass){passwd = pass;}
+    public void setuName(String name){this.uName = name;}
+    public void setPasswd(String pass){this.passwd = pass;}
+
+    @Override
+    public String toString() {
+        return "Credentials{" +
+                "uName='" + uName + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

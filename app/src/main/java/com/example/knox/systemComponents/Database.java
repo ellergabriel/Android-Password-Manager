@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Database extends RoomDatabase {
     public abstract PasswordDAO passDao();
     private static volatile Database instance = null;
-    private Database(){}
+    public Database(){}
     public static Database getInstance(){
         if(instance == null){
             //instance = new Database();
