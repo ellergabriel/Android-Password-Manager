@@ -42,17 +42,16 @@ public final class Requestor extends AutofillService {
         AssistStructure structure = context.get(context.size() - 1).getStructure();
 
         ParsedStructure parsedStruct = new ParsedStructure();
-        //Credentials userData = new Credentials("eller010", "password", " ");
+       // Credentials userData = new Credentials("eller010", "password", " ");
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
         //fetchUserData(parsedStruct, userData);
-        //Parcel id1 = null, id2 = null;
 
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         //todo: hardcoded credentials for testing purposes only
         userNamePresentation.setTextViewText(android.R.id.text1,"eller010");
-        RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         passwordPresentation.setTextViewText(android.R.id.text1, "password");
         //Adds dataset with credentials to response
 
@@ -117,15 +116,21 @@ public final class Requestor extends AutofillService {
             for(int i = 0; i < viewNode.getChildCount(); i++){
                 child = viewNode.getChildAt(i);
                 String tester = child.getHint();
+                String url = child.getWebDomain();
                 if(child.getChildCount() > 0){
                     traverseNode(child, parser);//recursive call for now;
                     //todo: implement stack when autofill is fully working
-                } else if(!(child.getAutofillHints() == null) || !(tester == null)){
+                }
+                if(!(child.getAutofillHints() == null) || !(tester == null)
+                        || !(url == null)){
+                    System.out.println("debug holder\n");
                     //text field has some hint, check for id
                     if(child.getHint().equals("Username")){
                         parser.userID = child.getAutofillId();
                     } else if (child.getHint().equals("Password")){
                         parser.passID = child.getAutofillId();
+                    } else if (child.getWebDomain() != null){
+                        parser.URL = child.getWebDomain();
                     }
                 }
             }
@@ -147,6 +152,7 @@ public final class Requestor extends AutofillService {
     class ParsedStructure {
         AutofillId userID;
         AutofillId passID;
+        String URL;
     }
 
     class UserData{
