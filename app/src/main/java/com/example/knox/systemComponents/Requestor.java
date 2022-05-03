@@ -50,6 +50,14 @@ public final class Requestor extends AutofillService {
 
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
+        /***
+         * pseudo code for database retrieval
+         *
+         * String url = parsedStruct.url
+         * Credentials dummy = PasswordDAO.find( url )
+         * userNamePresentation.setTextViewText(android.R.id.text1,dummy.getUName();
+         * passwordPresentation.setTextViewText(android.R.id.text1, dummy.getPasswrd());
+         */
         //todo: hardcoded credentials for testing purposes only
         userNamePresentation.setTextViewText(android.R.id.text1,"eller010");
         passwordPresentation.setTextViewText(android.R.id.text1, "password");
@@ -116,21 +124,22 @@ public final class Requestor extends AutofillService {
             for(int i = 0; i < viewNode.getChildCount(); i++){
                 child = viewNode.getChildAt(i);
                 String tester = child.getHint();
+                if(child.getWebDomain() != null){ //webdomain will only be sent once, safe to assign
+                                                 //to parsedStructure
+                    parser.URL = child.getWebDomain();
+                }
                 String url = child.getWebDomain();
                 if(child.getChildCount() > 0){
                     traverseNode(child, parser);//recursive call for now;
                     //todo: implement stack when autofill is fully working
                 }
-                if(!(child.getAutofillHints() == null) || !(tester == null)
-                        || !(url == null)){
+                if(!(child.getAutofillHints() == null) || !(tester == null)){
                     System.out.println("debug holder\n");
                     //text field has some hint, check for id
                     if(child.getHint().equals("Username")){
                         parser.userID = child.getAutofillId();
                     } else if (child.getHint().equals("Password")){
                         parser.passID = child.getAutofillId();
-                    } else if (child.getWebDomain() != null){
-                        parser.URL = child.getWebDomain();
                     }
                 }
             }
