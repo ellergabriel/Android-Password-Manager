@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.generation.GenerationFragment">
+    tools:context=".ui.generation.GenerationFragment" >
+
+    <Button
+        android:id="@+id/pwdGenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="208dp"
+        android:text="Generate Password"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/gen_frag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Password generation coming soon" />
+        android:id="@+id/charAmountView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginBottom="13dp"
+        android:text="Password Length (8-32 recommended): "
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="65dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="173dp"
+        android:layout_marginBottom="19dp"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="12"
+        android:inputType="number"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toTopOf="@+id/pwdGenButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="19dp"
+        android:text="Password Generated:"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="188dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="(New Password Here)"
+        app:layout_constraintBottom_toTopOf="@+id/charAmountView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
