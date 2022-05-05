@@ -4,6 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Room;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.collections.ArrayDeque;
 
 @Entity(tableName = "credentials")
 public class Credentials {
@@ -18,6 +24,7 @@ public class Credentials {
     @ColumnInfo(name = "URL")
     public String url;
 
+    public static List<Credentials> ITEMS = new ArrayList<Credentials>();
     public Credentials(){ }
 
     /****

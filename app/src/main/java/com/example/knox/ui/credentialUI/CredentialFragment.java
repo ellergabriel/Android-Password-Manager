@@ -7,12 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.knox.R;
+import com.example.knox.systemComponents.Database;
+import com.example.knox.systemComponents.PasswordDAO;
 import com.example.knox.ui.placeholder.PlaceholderContent;
 
 /**
@@ -55,6 +58,11 @@ public class CredentialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+
+        //database creation; call dao.vaultDisplay() to get all credentials
+        Database db = Room.databaseBuilder(requireContext(), Database.class,
+                "Credentials").allowMainThreadQueries().build();
+        PasswordDAO dao = db.passDao();
 
         // Set the adapter
         if (view instanceof RecyclerView) {

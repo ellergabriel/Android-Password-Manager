@@ -5,17 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.generation.GenerationFragment" >
-
-    <Button
-        android:id="@+id/pwdGenButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="208dp"
-        android:text="Generate Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    tools:context=".ui.generation.GenerationFragment">
 
     <!--<EditText
         android:id="@+id/editTextNumber"
@@ -31,54 +21,61 @@
         app:layout_constraintBottom_toTopOf="@+id/pwdGenButton"
         app:layout_constraintEnd_toEndOf="parent" />-->
 
-    <TextView
-        android:id="@+id/charAmountView"
+    <Button
+        android:id="@+id/pwdGenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="33dp"
-        android:text="Password Length (8-32): 12"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_marginBottom="76dp"
+        android:text="Generate Password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.212"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginBottom="19dp"
-        android:text="Password Generated:"
-        app:layout_constraintBottom_toTopOf="@+id/newPassword"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/newPassword"
         android:layout_width="188dp"
         android:layout_height="50dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginBottom="28dp"
-        android:selectAllOnFocus="true"
-        android:textIsSelectable="true"
+        android:layout_marginStart="104dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center_horizontal|center_vertical"
+        android:selectAllOnFocus="true"
         android:text="(New Password Here)"
+        android:textIsSelectable="true"
         app:layout_constraintBottom_toTopOf="@+id/charAmountView"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/charAmountView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:text="Password Length (8-32): 12"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newPassword" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="238dp"
         android:layout_height="15dp"
-        android:layout_marginStart="86dp"
-        android:layout_marginEnd="87dp"
-        android:layout_marginBottom="102dp"
-        android:min="8"
+        android:layout_marginStart="88dp"
         android:max="32"
+        android:min="8"
         android:progress="12"
         app:layout_constraintBottom_toTopOf="@+id/pwdGenButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/charAmountView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password Generated:"
+        app:layout_constraintBottom_toTopOf="@+id/newPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
