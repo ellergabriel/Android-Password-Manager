@@ -17,7 +17,7 @@ public abstract class Database extends RoomDatabase {
     }
 
     //Todo: implement password generation algorithm
-    private void generate(int length){
+    public static String generate(int length){
         boolean hasUpper, hasLower, hasNum, hasSym;
         String password = "";
         for(int i = 0; i < length; i++) {
@@ -30,5 +30,6 @@ public abstract class Database extends RoomDatabase {
             }
             password += (char) currentChar;
         }
+        return password;
     }
 }
