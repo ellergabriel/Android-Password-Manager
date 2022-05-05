@@ -51,6 +51,14 @@ public final class Requestor extends AutofillService {
                                             "Credentials").allowMainThreadQueries().build();
         PasswordDAO dao = db.passDao();
 
+        /*** Debugging section for database functionality
+        dao.insertAll(new Credentials("shazbot", "shazbot", "shazbot.com"));
+        List<Credentials> tester = dao.vaultDisplay();
+        for(int i = 0; i < tester.size(); i++){
+            System.out.println(tester.get(i));
+        }
+
+         *****/
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
 

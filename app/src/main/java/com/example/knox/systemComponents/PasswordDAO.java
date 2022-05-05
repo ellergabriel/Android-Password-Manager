@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 
 /**
  * Interface that allows for accessing Room database
@@ -14,11 +16,17 @@ import androidx.room.Query;
 @Dao
 public interface PasswordDAO {
 
+    //autofill query for matching URL
     @Query("SELECT * FROM credentials WHERE URL = :URL")
     Credentials getFullCred(String URL);
 
+    //query used only for Vault display
+    @Query("SELECT * FROM credentials")
+    List<Credentials> vaultDisplay();
+
     @Insert(entity = Credentials.class, onConflict = OnConflictStrategy.IGNORE)
     void insertAll(Credentials creds);
+    
     @Delete
     void delete(Credentials cred);
 }
