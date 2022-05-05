@@ -13,6 +13,7 @@ import android.service.autofill.FillContext;
 import android.service.autofill.FillRequest;
 import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
+import android.service.autofill.SaveInfo;
 import android.service.autofill.SaveRequest;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillManager;
@@ -21,6 +22,7 @@ import android.widget.RemoteViews;
 
 
 import androidx.annotation.NonNull;
+import androidx.room.Room;
 
 import com.example.knox.R;
 
@@ -36,41 +38,48 @@ public final class Requestor extends AutofillService {
         /*todo:check if session timer has ran out
         if timer is out, show fingerprint prompt to user before continuing
         else, keep it going*/
-
+        boolean hasLogin = false;
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
         AssistStructure structure = context.get(context.size() - 1).getStructure();
 
         ParsedStructure parsedStruct = new ParsedStructure();
-       // Credentials userData = new Credentials("eller010", "password", " ");
+
+        //todo: add threading support so database is not called on main thread
+        //      it works for now, but stresses the system
+        Database db = Room.databaseBuilder(getApplicationContext(), Database.class,
+                                            "Credentials").allowMainThreadQueries().build();
+        PasswordDAO dao = db.passDao();
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
-        //fetchUserData(parsedStruct, userData);
 
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
-        /***
-         * pseudo code for database retrieval
-         *
-         * String url = parsedStruct.url
-         * Credentials dummy = PasswordDAO.find( url )
-         * userNamePresentation.setTextViewText(android.R.id.text1,dummy.getUName();
-         * passwordPresentation.setTextViewText(android.R.id.text1, dummy.getPasswrd());
-         */
-        //todo: hardcoded credentials for testing purposes only
-        userNamePresentation.setTextViewText(android.R.id.text1,"eller010");
-        passwordPresentation.setTextViewText(android.R.id.text1, "password");
+        //dao.insertAll(new Credentials("eller010", "password", parsedStruct.URL));
+        Credentials cred = dao.getFullCred(parsedStruct.URL);
+        if(cred == null){
+          //todo: user has no saved credentials for the website
+          //      pop up password generator and save info
+            cred = new Credentials("","","");
+            //fillCallback.onFailure("No passwords saved");
+        }
+        userNamePresentation.setTextViewText(android.R.id.text1, cred.getUName());
+        passwordPresentation.setTextViewText(android.R.id.text1, cred.getPasswd());
         //Adds dataset with credentials to response
 
         //.todo: more hardcoded credentials; change after database is implemented
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
-                            .setValue(parsedStruct.userID,
-                                    AutofillValue.forText("eller010"), userNamePresentation)
-                            .setValue(parsedStruct.passID,
-                                    AutofillValue.forText("password"), passwordPresentation)
-                            .build())
+                        .setValue(parsedStruct.userID,
+                                AutofillValue.forText(cred.getUName()), userNamePresentation)
+                        .setValue(parsedStruct.passID,
+                                AutofillValue.forText(cred.getPasswd()), passwordPresentation)
+                        .build())
+                .setSaveInfo(new SaveInfo.Builder(
+                        SaveInfo.SAVE_DATA_TYPE_USERNAME | SaveInfo.SAVE_DATA_TYPE_PASSWORD,
+                        new AutofillId[]{parsedStruct.userID, parsedStruct.passID})
+                        .build())
                 .build();
 
         fillCallback.onSuccess(fillResponse);
@@ -81,7 +90,15 @@ public final class Requestor extends AutofillService {
     //todo: once database is implemented, make onSaveRequest encrypt and save to the database
     @Override
     public void onSaveRequest(@NonNull SaveRequest saveRequest, @NonNull SaveCallback saveCallback) {
+        // Get the structure from the request
+        List<FillContext> context = saveRequest.getFillContexts();
+        AssistStructure structure = context.get(context.size() - 1).getStructure();
+        ParsedStructure parse = new ParsedStructure();
+        // Traverse the structure looking for data to save
+        parseStructure(structure, parse);
 
+        // Persist the data, if there are no errors, call onSuccess()
+        saveCallback.onSuccess();
     }
 
     /**
@@ -128,7 +145,6 @@ public final class Requestor extends AutofillService {
                                                  //to parsedStructure
                     parser.URL = child.getWebDomain();
                 }
-                String url = child.getWebDomain();
                 if(child.getChildCount() > 0){
                     traverseNode(child, parser);//recursive call for now;
                     //todo: implement stack when autofill is fully working
@@ -144,15 +160,6 @@ public final class Requestor extends AutofillService {
                 }
             }
         }
-    }
-
-    /**
-     * Takes in already filled ParsedStructure with userID and passID and assigns to UserData object
-     * @param parser
-     * @param data
-     */
-    private static void fetchUserData(ParsedStructure parser, Credentials data){
-        //todo
     }
 
     /**
