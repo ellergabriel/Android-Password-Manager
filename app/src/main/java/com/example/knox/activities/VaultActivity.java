@@ -26,6 +26,8 @@ public class VaultActivity extends AppCompatActivity {
         CredentialFragment credFrag = new CredentialFragment();
         GenerationFragment genFrag = new GenerationFragment();
 
+        setFragment((credFrag)); //added so credentials so up
+
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
