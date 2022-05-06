@@ -4,6 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Room;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.collections.ArrayDeque;
 
 
 //(tableName = "credentials")
@@ -21,10 +27,22 @@ public class Credentials {
     @ColumnInfo(name = "URL")
     public String url;
 
-    public Credentials(String uName, String passwd, String url){
-        this.uName = uName;
-        this.passwd = passwd;
-        this.url = url;
+
+    public static List<Credentials> ITEMS = new ArrayList<Credentials>();
+    public Credentials(){ }
+
+    /****
+     * Pre-Condition: the password MUST be AES encrypted before the object is created.
+     * @param name - username for credential pair
+     * @param pass - ENCRYPTED password for credential pair
+     * @param URL - URL for webpage associated with credentials
+     */
+    public Credentials(String name, String pass, String URL){
+        uName = name;
+        passwd = pass;
+        url = URL;
+    }
+
 
     }
 
