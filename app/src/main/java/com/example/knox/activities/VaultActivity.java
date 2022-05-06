@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.knox.R;
+import com.example.knox.systemComponents.Credentials;
+import com.example.knox.systemComponents.Database;
 import com.example.knox.ui.credentialUI.CredentialFragment;
 import com.example.knox.ui.generation.GenerationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.List;
 
 //Todo: make Credential list appear with correct title and editable
 public class VaultActivity extends AppCompatActivity {
@@ -27,6 +31,17 @@ public class VaultActivity extends AppCompatActivity {
         GenerationFragment genFrag = new GenerationFragment();
 
         setFragment((credFrag)); //added so credentials so up
+        Database db = Database.getInstance(getApplicationContext());
+        //db.passDao().insert(new Credentials("test1", "hello1", "youtube.com"));
+//        db.passDao().insert(new Credentials("test2", "hello2", "google.com"));
+//        db.passDao().insert(new Credentials("test3", "hello3", "facebook.com"));
+//        db.passDao().insert(new Credentials("test4", "hello4", "instagram.com"));
+//        db.passDao().insert(new Credentials("test5", "hello5", "cc.csusm.edu"));
+//        db.passDao().insert(new Credentials("test6", "hello7", "my.csusm.edu"));
+// insert commented out because already in the database and crashes because there's duplicate entries
+        List<Credentials> testing= db.passDao().getAllCreds();
+        System.out.println(testing);
+
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

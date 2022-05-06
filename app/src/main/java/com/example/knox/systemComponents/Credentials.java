@@ -5,8 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
+//(tableName = "credentials")
 @Entity(tableName = "credentials")
 public class Credentials {
+
     @ColumnInfo(name = "username")
     public String uName;
 
@@ -18,26 +21,33 @@ public class Credentials {
     @ColumnInfo(name = "URL")
     public String url;
 
-    public Credentials(){ }
+    public Credentials(String uName, String passwd, String url){
+        this.uName = uName;
+        this.passwd = passwd;
+        this.url = url;
 
-    /****
-     * Pre-Condition: the password MUST be AES encrypted before the object is created.
-     * @param name - username for credential pair
-     * @param pass - ENCRYPTED password for credential pair
-     * @param URL - URL for webpage associated with credentials
-     */
-    public Credentials(String name, String pass, String URL){
-        uName = name;
-        passwd = pass;
-        url = URL;
     }
 
-    public String getUName() {return this.uName;}
-    public String getPasswd(){return this.passwd;}
-
-    public void setuName(String name){this.uName = name;}
-    public void setPasswd(String pass){this.passwd = pass;}
-
+//    public Credentials(){ }
+//
+//    /****
+//     * Pre-Condition: the password MUST be AES encrypted before the object is created.
+//     * @param name - username for credential pair
+//     * @param pass - ENCRYPTED password for credential pair
+//     * @param URL - URL for webpage associated with credentials
+//     */
+//    public Credentials(String name, String pass, String URL){
+//        uName = name;
+//        passwd = pass;
+//        url = URL;
+//    }
+//
+//    public String getUName() {return this.uName;}
+//    public String getPasswd(){return this.passwd;}
+//
+//    public void setuName(String name){this.uName = name;}
+//    public void setPasswd(String pass){this.passwd = pass;}
+//
     @Override
     public String toString() {
         return "Credentials{" +

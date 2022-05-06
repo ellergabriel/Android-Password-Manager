@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 
 /**
  * Interface that allows for accessing Room database
@@ -21,4 +23,12 @@ public interface PasswordDAO {
     void insertAll(Credentials creds);
     @Delete
     void delete(Credentials cred);
+
+    //new
+    @Insert
+    void insert(Credentials cred);
+    @Query("Select * from credentials")
+    List<Credentials> getAllCreds();
+
+
 }

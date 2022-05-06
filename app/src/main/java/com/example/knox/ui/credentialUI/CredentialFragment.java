@@ -8,17 +8,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.knox.R;
+import com.example.knox.systemComponents.Credentials;
+import com.example.knox.systemComponents.Database;
 import com.example.knox.ui.placeholder.PlaceholderContent;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
  */
 public class CredentialFragment extends Fragment {
+
+    Database db = Database.getInstance(getActivity());
+    List<Credentials> testing= db.passDao().getAllCreds();
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -49,6 +57,8 @@ public class CredentialFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        System.out.println(testing);
     }
 
     @Override
@@ -65,7 +75,8 @@ public class CredentialFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(PlaceholderContent.ITEMS));
+//            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(testing));
         }
         return view;
     }

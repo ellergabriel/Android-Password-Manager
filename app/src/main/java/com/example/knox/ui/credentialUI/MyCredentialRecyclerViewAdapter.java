@@ -2,12 +2,18 @@ package com.example.knox.ui.credentialUI;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.knox.systemComponents.Credentials;
 import com.example.knox.ui.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.knox.databinding.FragmentItemBinding;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import java.util.List;
 
@@ -17,10 +23,11 @@ import java.util.List;
  */
 public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCredentialRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final List<Credentials> allCreds;
 
-    public MyCredentialRecyclerViewAdapter(List<PlaceholderItem> items) {
-        mValues = items;
+
+    public MyCredentialRecyclerViewAdapter(List<Credentials> creds) {
+        allCreds = creds;
     }
 
     @Override
@@ -32,20 +39,22 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = allCreds.get(position);
+        holder.mIdView.setText(allCreds.get(position).url);
+        holder.mContentView.setText(allCreds.get(position).uName);
+//        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mContentView.setText(mValues.get(position).content);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return allCreds.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public Credentials mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
             super(binding.getRoot());
