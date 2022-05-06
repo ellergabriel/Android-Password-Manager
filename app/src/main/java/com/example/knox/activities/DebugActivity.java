@@ -33,7 +33,7 @@ public class DebugActivity extends AppCompatActivity {
         Database db = Room.databaseBuilder(getApplicationContext(),
                 Database.class, "shazbot").allowMainThreadQueries().build();
         PasswordDAO dao = db.passDao();
-        dao.insertAll(new Credentials("eller010", "shazbot", "google.com"));
+        //dao.insertAll(new Credentials("eller010", "shazbot", "google.com"));
         Credentials tester = dao.getFullCred("google.com");
         System.out.println(tester.toString());
         logButton.setOnClickListener(view ->{

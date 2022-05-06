@@ -44,8 +44,6 @@ public class Credentials {
     }
 
 
-    }
-
 //    public Credentials(){ }
 //
 //    /****
@@ -60,11 +58,11 @@ public class Credentials {
 //        url = URL;
 //    }
 //
-//    public String getUName() {return this.uName;}
-//    public String getPasswd(){return this.passwd;}
+    public String getUName() {return this.uName;}
+    public String getPasswd(){return this.passwd;}
 //
-//    public void setuName(String name){this.uName = name;}
-//    public void setPasswd(String pass){this.passwd = pass;}
+    public void setuName(String name){this.uName = name;}
+    public void setPasswd(String pass){this.passwd = pass;}
 //
     @Override
     public String toString() {
