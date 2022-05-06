@@ -1,5 +1,11 @@
 package com.example.knox.ui.placeholder;
 
+import android.content.Context;
+
+import com.example.knox.systemComponents.Credentials;
+import com.example.knox.systemComponents.Database;
+import com.example.knox.systemComponents.PasswordDAO;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +22,7 @@ public class PlaceholderContent {
     /**
      * An array of sample (placeholder) items.
      */
-    public static final List<PlaceholderItem> ITEMS = new ArrayList<PlaceholderItem>();
+    public static final List<Credentials> ITEMS = new ArrayList<Credentials>();
 
     /**
      * A map of sample (placeholder) items, by ID.
@@ -30,15 +36,36 @@ public class PlaceholderContent {
         for (int i = 1; i <= COUNT; i++) {
             addItem(createPlaceholderItem(i));
         }
+
+
+//        Context context;
+//
+//        Database db = Database.getInstance(getApplicationContext());
+//
+//        PasswordDAO dao = db.passDao();
+//        dao.insertAll(new Credentials("eller010", "shazbot", "google.com"));
+//        Credentials tester = dao.getFullCred("google.com");
+//
+//        List<Credentials> test = dao.getAllCreds();
+
+//        System.out.println("test");
+
+//        logButton.setOnClickListener(view ->{
+//            if (user.getText().toString().equals("eller010") &&
+//                    pass.getText().toString().equals("password")){
+//                //System.exit(0);
+//
+//            }
+//        });
     }
 
-    private static void addItem(PlaceholderItem item) {
+    private static void addItem(Credentials item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+//        ITEM_MAP.put(item.id, item);
     }
 
-    private static PlaceholderItem createPlaceholderItem(int position) {
-        return new PlaceholderItem(String.valueOf(position), "Item " + position, makeDetails(position));
+    private static Credentials createPlaceholderItem(int position) {
+        return new Credentials("Item ", "hi", "createplaceholderitem");
     }
 
     private static String makeDetails(int position) {
@@ -54,12 +81,12 @@ public class PlaceholderContent {
      * A placeholder item representing a piece of content.
      */
     public static class PlaceholderItem {
-        public final String id;
+//        public final String id;
         public final String content;
         public final String details;
 
-        public PlaceholderItem(String id, String content, String details) {
-            this.id = id;
+        public PlaceholderItem(String content, String details) {
+//            this.id = id;
             this.content = content;
             this.details = details;
         }

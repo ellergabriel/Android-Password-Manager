@@ -6,6 +6,7 @@ import androidx.biometric.BiometricPrompt;
 import android.os.Bundle;
 import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
+import com.example.knox.systemComponents.Database;
 import com.example.knox.systemComponents.Requestor;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private boolean isExit = false;
+
+    Database db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+
+        db = Database.getInstance(getApplicationContext());
+
         //Validator.getInstance().createPrompt(this);
 
         //Biometric prompt to user before accessing rest of app
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Authentication error: " + errString, Toast.LENGTH_SHORT)
                                     .show();
-                            System.exit(0);
+//                            System.exit(0);
                         }
             }
 

@@ -1,4 +1,8 @@
 package com.example.knox.systemComponents;
+import android.content.Context;
+import android.util.Log;
+
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import java.util.Random;
@@ -7,13 +11,24 @@ import java.util.concurrent.ThreadLocalRandom;
 //Todo: implement password generation algorithm
 @androidx.room.Database(entities = {Credentials.class}, version = 1)
 public abstract class Database extends RoomDatabase {
+
+    private static volatile Database instance;
+
     public abstract PasswordDAO passDao();
-    private static volatile Database instance = null;
-    public Database(){}
-    public static Database getInstance(){
-        if(instance == null){
+
+    public Database(){
+
+    }
+
+    public static Database getInstance(Context context) {
+        if (instance == null) {
             //instance = new Database();
+            Log.d(" testing: ","Making credentials class");
+            instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials")
+                    .allowMainThreadQueries()
+                    .build();
         }
+        Log.d("testing: ", "database instance");
         return instance;
     }
 

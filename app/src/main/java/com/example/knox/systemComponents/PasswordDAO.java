@@ -29,4 +29,12 @@ public interface PasswordDAO {
     
     @Delete
     void delete(Credentials cred);
+
+    //new
+    @Insert
+    void insert(Credentials cred);
+    @Query("Select * from credentials")
+    List<Credentials> getAllCreds();
+
+
 }
