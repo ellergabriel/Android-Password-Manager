@@ -71,7 +71,7 @@ public class CredentialFragment extends Fragment {
 
         //database creation; call dao.vaultDisplay() to get all credentials
         Database db = Room.databaseBuilder(requireContext(), Database.class,
-                "Credentials").allowMainThreadQueries().build();
+                "credentials").allowMainThreadQueries().build();
         PasswordDAO dao = db.passDao();
 
         // Set the adapter
