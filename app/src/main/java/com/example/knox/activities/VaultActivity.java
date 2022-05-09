@@ -40,7 +40,7 @@ public class VaultActivity extends AppCompatActivity {
         db.passDao().insert(new Credentials("test6", "hello7", "my.csusm.edu"));
 // insert commented out because already in the database and crashes because there's duplicate entries
         List<Credentials> testing= db.passDao().getAllCreds();
-        System.out.println(testing);
+        System.out.println(testing + " - VaultActivity.java");
 
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

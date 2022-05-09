@@ -6,6 +6,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 //Todo: implement password generation algorithm
@@ -14,6 +16,9 @@ public abstract class Database extends RoomDatabase {
 
     private static volatile Database instance;
 
+    private static final int NUMBER_OF_THREADS = 4;
+    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
     public abstract PasswordDAO passDao();
 
     public Database(){
@@ -21,12 +26,22 @@ public abstract class Database extends RoomDatabase {
     }
 
     public static Database getInstance(Context context) {
-        if (instance == null) {
-            //instance = new Database();
-            Log.d(" testing: ","Making credentials class");
-            instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials")
-                    .allowMainThreadQueries()
-                    .build();
+//        if (instance == null) {
+//            //instance = new Database();
+//            Log.d(" testing: ","Making credentials class");
+//            instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials")
+//                    .allowMainThreadQueries()
+//                    .build();
+//        }
+//        Log.d("testing: ", "database instance");
+//        return instance;
+        if(instance == null){
+            synchronized (Database.class){
+                if(instance == null){
+                    Log.d(" testing: ","Making credentials class");
+                    instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials").allowMainThreadQueries().build();
+                }
+            }
         }
         Log.d("testing: ", "database instance");
         return instance;

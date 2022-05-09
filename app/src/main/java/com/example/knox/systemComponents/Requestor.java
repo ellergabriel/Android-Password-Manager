@@ -49,7 +49,7 @@ public final class Requestor extends AutofillService {
         //todo: add threading support so database is not called on main thread
         //      it works for now, but stresses the system
         Database db = Room.databaseBuilder(getApplicationContext(), Database.class,
-                                            "Credentials").allowMainThreadQueries().build();
+                                            "credentials").allowMainThreadQueries().build();
         PasswordDAO dao = db.passDao();
 
         /*** Debugging section for database functionality
