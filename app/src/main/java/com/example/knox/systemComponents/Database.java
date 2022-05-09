@@ -38,10 +38,12 @@ public abstract class Database extends RoomDatabase {
         if(instance == null){
             synchronized (Database.class){
                 if(instance == null){
+                    Log.d(" testing: ","Making credentials class");
                     instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials").allowMainThreadQueries().build();
                 }
             }
         }
+        Log.d("testing: ", "database instance");
         return instance;
     }
 

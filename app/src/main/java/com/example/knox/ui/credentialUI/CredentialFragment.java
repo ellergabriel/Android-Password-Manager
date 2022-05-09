@@ -61,7 +61,7 @@ public class CredentialFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        System.out.println(testing);
+        System.out.println(testing + " - CredentialFragment.java");
     }
 
     @Override
