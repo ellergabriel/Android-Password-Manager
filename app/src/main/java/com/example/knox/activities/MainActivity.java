@@ -107,10 +107,13 @@ public class MainActivity extends AppCompatActivity {
         //create requestor object via singleton creation
         Requestor.getInstance();
 
+        //uncomment for access to debugger
+        /***
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
             debugMode();
         });
+         ***/
     }
 
     public void debugMode(){
