@@ -29,7 +29,8 @@ public class Credentials {
 
 
     public static List<Credentials> ITEMS = new ArrayList<Credentials>();
-    public Credentials(){ }
+
+    public Credentials() { }
 
     /****
      * Pre-Condition: the password MUST be AES encrypted before the object is created.
@@ -37,13 +38,10 @@ public class Credentials {
      * @param pass - ENCRYPTED password for credential pair
      * @param URL - URL for webpage associated with credentials
      */
-    public Credentials(String name, String pass, String URL){
+    public Credentials(String name, String pass, String URL) {
         uName = name;
         passwd = pass;
         url = URL;
-    }
-
-
     }
 
 //    public Credentials(){ }
@@ -59,12 +57,12 @@ public class Credentials {
 //        passwd = pass;
 //        url = URL;
 //    }
-//
-//    public String getUName() {return this.uName;}
-//    public String getPasswd(){return this.passwd;}
-//
-//    public void setuName(String name){this.uName = name;}
-//    public void setPasswd(String pass){this.passwd = pass;}
+
+    public String getUName() {return this.uName;}
+    public String getPasswd(){return this.passwd;}
+
+    public void setuName(String name){this.uName = name;}
+    public void setPasswd(String pass){this.passwd = pass;}
 //
     @Override
     public String toString() {
