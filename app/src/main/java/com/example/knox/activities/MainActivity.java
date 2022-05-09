@@ -8,6 +8,7 @@ import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
 import com.example.knox.systemComponents.Database;
 import com.example.knox.systemComponents.Requestor;
+import com.example.knox.systemComponents.Validator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         //check for autofill enabled on startup
         AutofillManager manager = getSystemService(AutofillManager.class);
         if(!manager.hasEnabledAutofillServices()){
-            System.out.println("shazbot\n");
             //device does not support autofill; edge case to fill out later
             if(!manager.isAutofillSupported()){
                 //TODO: Autofill not supported on device; abort or redirect user
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * Database needs to be instantiated on startup, otherwise null pointer is thrown
+         */
         db = Database.getInstance(getApplicationContext());
 
         //Validator.getInstance().createPrompt(this);
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         //TODO: make Validator perform the following code
         /*entire method is already written in the class, getting the prompt to display
         * directly from main is the issue. Could be threading. */
+
+       /*
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {
@@ -96,12 +101,21 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         biometricPrompt.authenticate(promptInfo); //prompt shows up on start up
-
+        */
+        boolean isValid = false;
+        Validator.getInstance().createPrompt(this);
         Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
-            biometricPrompt.authenticate(promptInfo);
+            if(Validator.getIsValid() && Validator.isSessionValid()){ //checks for 60 second login window
+                vaultMode();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Authentication error: Invalid biometric, click and try again",
+                        Toast.LENGTH_SHORT)
+                        .show();
+                Validator.getInstance().createPrompt(this);
+            }
         });
-
         //Validator.getInstance().createPrompt(this);
 
         //create requestor object via singleton creation

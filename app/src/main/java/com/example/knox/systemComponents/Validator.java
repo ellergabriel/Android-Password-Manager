@@ -29,7 +29,7 @@ public final class Validator extends AppCompatActivity{
     private BiometricPrompt.PromptInfo promptInfo;
     private static volatile Validator instance = null;
     private Validator(){}
-
+    private static boolean isValid = false;
     /**
      * Method ensures user has proper biometric authentication enabled
      * @param context When calling the method, pass in the current context
@@ -85,6 +85,7 @@ public final class Validator extends AppCompatActivity{
                 Toast.makeText(context,
                         "Authentication error: " + errString, Toast.LENGTH_SHORT)
                         .show();
+                Validator.isValid = false;
             }
 
             @Override
@@ -92,6 +93,8 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(context,
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                Validator.isValid = true;
+                Requestor.setTimer();
             }
 
             @Override
@@ -99,23 +102,26 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationFailed();
                 Toast.makeText(context, "Authentication failed",
                         Toast.LENGTH_SHORT).show();
+                Validator.isValid = false;
             }
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
                 .setSubtitle("Log in with fingerprint")
-                .setNegativeButtonText("Use account password")
+                .setNegativeButtonText("Cancel")
                 .build();
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        biometricPrompt.authenticate(promptInfo);
+
+
+        /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View customView = getLayoutInflater().inflate(R.layout.login_popup, null, true);
         Button scanner = customView.findViewById(R.id.bioButton);
         PopupWindow biometricLogin = new PopupWindow(customView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
         biometricLogin.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
         scanner.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
-        });
-
+        }); */
         finish();
     }
 
@@ -124,6 +130,19 @@ public final class Validator extends AppCompatActivity{
             instance = new Validator();
         }
         return instance;
+    }
+
+    public static boolean getIsValid(){
+        return Validator.isValid;
+    }
+
+    /**
+     * Checks Requestor timer to make sure session has been going for only < 60 seconds
+     * Uses system time as a constant
+     * @return true if < 60 seconds since last login, false otherwise
+     */
+    public static boolean isSessionValid(){
+        return (System.currentTimeMillis() - Requestor.checkTimer() < 60000);
     }
 
     /**

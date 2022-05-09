@@ -22,6 +22,7 @@ import android.widget.RemoteViews;
 
 
 import androidx.annotation.NonNull;
+import androidx.room.RawQuery;
 import androidx.room.Room;
 
 import com.example.knox.R;
@@ -30,7 +31,7 @@ public final class Requestor extends AutofillService {
 
     //Singleton creation pattern
     private static volatile Requestor instance = null;
-    private static volatile Timer timer = null;
+    private static volatile long timer = -1;
     public Requestor(){} //constructor must be public to implement autofill service
 
     @Override
@@ -109,6 +110,14 @@ public final class Requestor extends AutofillService {
         saveCallback.onSuccess();
     }
 
+    public static long checkTimer(){
+       return timer;
+    }
+
+    public static void setTimer(){
+        timer = System.currentTimeMillis();
+    }
+
     /**
      * Lazy Singleton constructor
      * @return single instance of Requestor
@@ -116,7 +125,7 @@ public final class Requestor extends AutofillService {
     public static Requestor getInstance(){
         if(instance == null){
             instance = new Requestor();
-            timer = new Timer();
+            //timer = new Timer();
         }
         return instance;
     }

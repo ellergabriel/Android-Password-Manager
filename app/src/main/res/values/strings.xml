@@ -7,7 +7,7 @@
     <string name="password_prompt">Password</string>
     <string name="debug_mode">Debug Mode</string>
     <string name="password">password</string>
-    <string name="bioprompt">Enter fingerprint to access vault</string>
+    <string name="bioprompt">Access Vault</string>
     <string name="vault_tab">Vault</string>
     <string name="generation_tab">Generation</string>
 </resources>
