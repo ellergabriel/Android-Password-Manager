@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         Validator.getInstance().createPrompt(this);
         Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
-            if(Validator.getIsValid()){
+            if(Validator.getIsValid() && Validator.isSessionValid()){ //checks for 60 second login window
                 vaultMode();
             } else {
                 Toast.makeText(getApplicationContext(),

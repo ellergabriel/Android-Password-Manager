@@ -94,6 +94,7 @@ public final class Validator extends AppCompatActivity{
                 Toast.makeText(context,
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
                 Validator.isValid = true;
+                Requestor.setTimer();
             }
 
             @Override
@@ -133,6 +134,15 @@ public final class Validator extends AppCompatActivity{
 
     public static boolean getIsValid(){
         return Validator.isValid;
+    }
+
+    /**
+     * Checks Requestor timer to make sure session has been going for only < 60 seconds
+     * Uses system time as a constant
+     * @return true if < 60 seconds since last login, false otherwise
+     */
+    public static boolean isSessionValid(){
+        return (System.currentTimeMillis() - Requestor.checkTimer() < 60000);
     }
 
     /**
