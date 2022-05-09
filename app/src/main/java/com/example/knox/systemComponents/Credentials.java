@@ -44,6 +44,7 @@ public class Credentials {
         url = URL;
     }
 
+
 //    public Credentials(){ }
 //
 //    /****
@@ -57,6 +58,7 @@ public class Credentials {
 //        passwd = pass;
 //        url = URL;
 //    }
+
 
     public String getUName() {return this.uName;}
     public String getPasswd(){return this.passwd;}

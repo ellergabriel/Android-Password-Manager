@@ -34,7 +34,7 @@
         app:navGraph="@navigation/mobile_navigation" />
            -->
 
-
+<!--
     <Button
         android:id="@+id/debug_button"
         android:layout_width="188dp"
@@ -45,7 +45,7 @@
         android:text="@string/debug_mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+-->
     <Button
         android:id="@+id/fp_button"
         android:layout_width="188dp"

@@ -24,15 +24,22 @@ public interface PasswordDAO {
     @Query("SELECT * FROM credentials")
     List<Credentials> vaultDisplay();
 
-    @Insert(entity = Credentials.class, onConflict = OnConflictStrategy.IGNORE)
+    @Insert(entity = Credentials.class, onConflict = OnConflictStrategy.ABORT)
     void insertAll(Credentials creds);
     
     @Delete
     void delete(Credentials cred);
 
     //new
-    @Insert
+
+    /**
+     * Insertion will replace any existing URL; should only be called by onSaveRequest in Requestor
+     * OR when the user
+     * @param cred
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Credentials cred);
+
     @Query("Select * from credentials")
     List<Credentials> getAllCreds();
 
