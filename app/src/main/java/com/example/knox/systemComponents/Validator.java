@@ -6,6 +6,7 @@ import androidx.biometric.*;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.knox.R;
 import com.example.knox.activities.MainActivity;
+import com.example.knox.activities.VaultActivity;
 
 import java.util.concurrent.Executor;
 
@@ -92,6 +94,7 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(context,
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                vaultMode(context);
             }
 
             @Override
@@ -105,16 +108,18 @@ public final class Validator extends AppCompatActivity{
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
                 .setSubtitle("Log in with fingerprint")
-                .setNegativeButtonText("Use account password")
+                .setNegativeButtonText("Cancel")
                 .build();
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+
+        biometricPrompt.authenticate(promptInfo);
+        /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View customView = getLayoutInflater().inflate(R.layout.login_popup, null, true);
         Button scanner = customView.findViewById(R.id.bioButton);
         PopupWindow biometricLogin = new PopupWindow(customView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
         biometricLogin.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
         scanner.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
-        });
+        });*/
 
         finish();
     }
@@ -126,6 +131,10 @@ public final class Validator extends AppCompatActivity{
         return instance;
     }
 
+    public void vaultMode(Context context){
+        Intent intent = new Intent(context, VaultActivity.class);
+        context.startActivity(intent);
+    }
     /**
      *
      * @param req Requestor object that stores session timer

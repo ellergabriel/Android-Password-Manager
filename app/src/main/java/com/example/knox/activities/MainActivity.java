@@ -8,6 +8,7 @@ import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
 import com.example.knox.systemComponents.Database;
 import com.example.knox.systemComponents.Requestor;
+import com.example.knox.systemComponents.Validator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -50,13 +51,21 @@ public class MainActivity extends AppCompatActivity {
 
         db = Database.getInstance(getApplicationContext());
 
-        //Validator.getInstance().createPrompt(this);
+
+        Button biometricLogin = findViewById(R.id.fp_button);
+
+        biometricLogin.setOnClickListener(view -> {
+            Validator.getInstance().createPrompt(this);
+            //vaultMode();
+        });
+
+
 
         //Biometric prompt to user before accessing rest of app
         //TODO: make Validator perform the following code
         /*entire method is already written in the class, getting the prompt to display
         * directly from main is the issue. Could be threading. */
-        executor = ContextCompat.getMainExecutor(this);
+        /*executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -100,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
-        });
+        });*/
 
         //Validator.getInstance().createPrompt(this);
 
@@ -118,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void vaultMode(){
+    /*public void vaultMode(){
         Intent intent = new Intent(this, VaultActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 }
