@@ -7,12 +7,14 @@ import android.os.Bundle;
 import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
 import com.example.knox.systemComponents.Database;
+import com.example.knox.systemComponents.PasswordDAO;
 import com.example.knox.systemComponents.Requestor;
 import com.example.knox.systemComponents.Validator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.provider.ContactsContract;
 import android.view.autofill.AutofillManager;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private BiometricPrompt.PromptInfo promptInfo;
     private boolean isExit = false;
 
-    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Database needs to be instantiated on startup, otherwise null pointer is thrown
+         * getInstance() instantiates both the database and passwordDAO
          */
-        db = Database.getInstance(getApplicationContext());
+        Database.getInstance(getApplicationContext());
 
         //Validator.getInstance().createPrompt(this);
 
@@ -122,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
         Requestor.getInstance();
 
         //uncomment for access to debugger
-        /***
+
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
             debugMode();
         });
-         ***/
+
     }
 
     public void debugMode(){

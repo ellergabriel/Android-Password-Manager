@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,8 @@ import java.util.List;
  */
 public class CredentialFragment extends Fragment {
 
-    Database db = Database.getInstance(getActivity());
-    List<Credentials> testing= db.passDao().getAllCreds();
+    //Database db = Database.getInstance(getActivity());
+    List<Credentials> testing= Database.getInstance(getActivity()).getAllCreds();
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";

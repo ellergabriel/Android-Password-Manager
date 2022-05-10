@@ -44,22 +44,6 @@ public class Credentials {
         url = URL;
     }
 
-
-//    public Credentials(){ }
-//
-//    /****
-//     * Pre-Condition: the password MUST be AES encrypted before the object is created.
-//     * @param name - username for credential pair
-//     * @param pass - ENCRYPTED password for credential pair
-//     * @param URL - URL for webpage associated with credentials
-//     */
-//    public Credentials(String name, String pass, String URL){
-//        uName = name;
-//        passwd = pass;
-//        url = URL;
-//    }
-
-
     public String getUName() {return this.uName;}
     public String getPasswd(){return this.passwd;}
 

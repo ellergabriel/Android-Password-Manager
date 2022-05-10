@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Database extends RoomDatabase {
 
     private static volatile Database instance;
+    private static volatile PasswordDAO dao;
 
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -25,7 +26,7 @@ public abstract class Database extends RoomDatabase {
 
     }
 
-    public static Database getInstance(Context context) {
+    public static PasswordDAO getInstance(Context context) {
 //        if (instance == null) {
 //            //instance = new Database();
 //            Log.d(" testing: ","Making credentials class");
@@ -39,12 +40,14 @@ public abstract class Database extends RoomDatabase {
             synchronized (Database.class){
                 if(instance == null){
                     Log.d(" testing: ","Making credentials class");
-                    instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials").allowMainThreadQueries().build();
+                    instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "credentials")
+                            .allowMainThreadQueries().build();
+                    dao = instance.passDao();
                 }
             }
         }
         Log.d("testing: ", "database instance");
-        return instance;
+        return dao;
     }
 
 
@@ -63,7 +66,7 @@ public abstract class Database extends RoomDatabase {
 
                 password += (char) currentChar;
                 //character validation; if not all 4 bools are true, repeat sequence
-                if ((currentChar >= 33 && currentChar < 48)
+                if ((currentChar < 48)
                         || (currentChar >= 58 && currentChar < 65)
                         || (currentChar >= 91 && currentChar < 97)) {
                     hasSym = true;

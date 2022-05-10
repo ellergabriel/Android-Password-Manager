@@ -32,6 +32,9 @@ public final class Requestor extends AutofillService {
     //Singleton creation pattern
     private static volatile Requestor instance = null;
     private static volatile long timer = -1;
+    private static String capturedUName;
+    private static String capturedPassword;
+    public static String capturedURL;
     public Requestor(){} //constructor must be public to implement autofill service
 
     @Override
@@ -58,8 +61,8 @@ public final class Requestor extends AutofillService {
         for(int i = 0; i < tester.size(); i++){
             System.out.println(tester.get(i));
         }
-
          *****/
+
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
 
@@ -67,17 +70,15 @@ public final class Requestor extends AutofillService {
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         //dao.insertAll(new Credentials("eller010", "password", parsedStruct.URL));
         Credentials cred = dao.getFullCred(parsedStruct.URL);
+
         if(cred == null){
-          //todo: user has no saved credentials for the website
-          //      pop up password generator and save info
-            cred = new Credentials("","","");
-            //fillCallback.onFailure("No passwords saved");
+            cred = new Credentials("DNE","DNE","");
         }
+
         userNamePresentation.setTextViewText(android.R.id.text1, cred.getUName());
         passwordPresentation.setTextViewText(android.R.id.text1, cred.getPasswd());
         //Adds dataset with credentials to response
 
-        //.todo: more hardcoded credentials; change after database is implemented
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                         .setValue(parsedStruct.userID,
@@ -105,6 +106,11 @@ public final class Requestor extends AutofillService {
         ParsedStructure parse = new ParsedStructure();
         // Traverse the structure looking for data to save
         parseStructure(structure, parse);
+        if(capturedUName != null && capturedPassword != null
+            && capturedURL != null){
+            Credentials save = new Credentials(capturedUName, capturedPassword, capturedURL);
+            capturedURL = capturedPassword = capturedUName = null;
+        }
 
         // Persist the data, if there are no errors, call onSuccess()
         saveCallback.onSuccess();
@@ -147,13 +153,13 @@ public final class Requestor extends AutofillService {
     }
 
     /**
-     * Helper function to parse through ViewNode information via Children field
-     * @param viewNode
+     * Recursive function to parse through ViewNode information via Children field
+     *
+     * @param viewNode child node to explore
      * @param parser
      */
     private static void traverseNode(AssistStructure.ViewNode viewNode, ParsedStructure parser){
         if (viewNode.getChildCount() > 0){
-            //todo:
             AssistStructure.ViewNode child;
             for(int i = 0; i < viewNode.getChildCount(); i++){
                 child = viewNode.getChildAt(i);
@@ -161,18 +167,26 @@ public final class Requestor extends AutofillService {
                 if(child.getWebDomain() != null){ //webdomain will only be sent once, safe to assign
                                                  //to parsedStructure
                     parser.URL = child.getWebDomain();
+                    capturedURL = child.getWebDomain();
                 }
                 if(child.getChildCount() > 0){
                     traverseNode(child, parser);//recursive call for now;
-                    //todo: implement stack when autofill is fully working
+                    /*todo: implement queue when autofill is fully working
+                            recursive function is not as optimized*/
                 }
                 if(!(child.getAutofillHints() == null) || !(tester == null)){
                     System.out.println("debug holder\n");
                     //text field has some hint, check for id
                     if(child.getHint().equals("Username")){
                         parser.userID = child.getAutofillId();
+                        try {
+                            capturedUName = (String) child.getAutofillValue().getTextValue();
+                        } catch (NullPointerException n) { /*do nothing*/}
                     } else if (child.getHint().equals("Password")){
                         parser.passID = child.getAutofillId();
+                        try {
+                            capturedPassword = (String) child.getAutofillValue().getTextValue();
+                        } catch (NullPointerException n){/*do nothing, again*/}
                     }
                 }
             }
