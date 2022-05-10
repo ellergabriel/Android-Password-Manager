@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.VaultActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/password"
+        app:fabCustomSize="25sp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/vault_gen_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_circle_48" />
+
     <FrameLayout
         android:id="@+id/vault_gen_frame"
         android:layout_width="match_parent"
@@ -15,6 +27,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
+
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
