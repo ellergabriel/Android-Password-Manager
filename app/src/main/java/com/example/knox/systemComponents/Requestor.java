@@ -75,8 +75,16 @@ public final class Requestor extends AutofillService {
             cred = new Credentials("DNE","DNE","");
         }
 
+        //Creates **** password text so user does not see password on autofill
+        int defaultSize = 6;
+        String dummy = "";
+        char holder = 46;
+        for(int i = 0; i < defaultSize; i++){
+            dummy += holder;
+        }
+
         userNamePresentation.setTextViewText(android.R.id.text1, cred.getUName());
-        passwordPresentation.setTextViewText(android.R.id.text1, cred.getPasswd());
+        passwordPresentation.setTextViewText(android.R.id.text1, dummy);
         //Adds dataset with credentials to response
 
         FillResponse fillResponse = new FillResponse.Builder()
@@ -110,8 +118,8 @@ public final class Requestor extends AutofillService {
             && capturedURL != null){
             Credentials save = new Credentials(capturedUName, capturedPassword, capturedURL);
             capturedURL = capturedPassword = capturedUName = null;
+            Database.getInstance(getApplicationContext()).insert(save);
         }
-
         // Persist the data, if there are no errors, call onSuccess()
         saveCallback.onSuccess();
     }

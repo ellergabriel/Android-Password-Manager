@@ -118,18 +118,20 @@ public class MainActivity extends AppCompatActivity {
                 Validator.getInstance().createPrompt(this);
             }
         });
-        //Validator.getInstance().createPrompt(this);
 
         //create requestor object via singleton creation
         Requestor.getInstance();
 
-        //uncomment for access to debugger
+        //uncomment to clear DB for testing
+        //Database.getInstance(getApplicationContext()).deleteAll();
 
+        //uncomment for access to debugger
+        /*
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
             debugMode();
         });
-
+        */
     }
 
     public void debugMode(){
