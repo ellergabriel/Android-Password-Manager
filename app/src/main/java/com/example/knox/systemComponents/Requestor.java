@@ -100,18 +100,19 @@ public final class Requestor extends AutofillService {
         }
 
         if(!cred.getPasswd().equals("DNE")){
-            try{
-                cred.setPasswd(AESCrypt.decrypt(key, cred.getPasswd()));
-                if(!Validator.isSessionValid()) {
-                    //Validator.getInstance().createPrompt(getApplicationContext().getApplicationContext());
-                }//checks for 60 second login window
-            } catch (GeneralSecurityException g){/*do nothing*/}
+            cred.setPasswd(decrypt(cred.getPasswd()));
+            if(!Validator.isSessionValid()) {
+                //Validator.getInstance().createPrompt(getApplicationContext().getApplicationContext());
+            }//checks for 60 second login window
         }
 
         userNamePresentation.setTextViewText(android.R.id.text1, cred.getUName());
         passwordPresentation.setTextViewText(android.R.id.text1, dummy);
         //Adds dataset with credentials to response
-
+        if(parsedStruct.userID == null || parsedStruct.passID == null){
+            fillCallback.onFailure("failed to find autofill fields");
+            return;
+        }
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                         .setValue(parsedStruct.userID,
@@ -217,15 +218,34 @@ public final class Requestor extends AutofillService {
                         parser.passID = child.getAutofillId();
                         try {
                             capturedPassword = (String) child.getAutofillValue().getTextValue();
-                            capturedPassword = AESCrypt.encrypt(key, capturedPassword);
+                            capturedPassword = encrypt(capturedPassword);
                         } catch (NullPointerException n){
-                            /*do nothing, again*/
-                        } catch (GeneralSecurityException g){
                             /*do nothing, again*/
                         }
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Helper function that encapsulates AESCrypt encrypt function
+     * @param pass - password to be encrypted
+     * @return - encrypted password if string is valid, empty string otherwise
+     */
+    public static String encrypt(String pass){
+        try{
+            return AESCrypt.encrypt(key, pass);
+        } catch (GeneralSecurityException g){
+            return "";
+        }
+    }
+
+    public static String decrypt(String hash){
+        try{
+            return AESCrypt.decrypt(key, hash);
+        } catch (GeneralSecurityException g){
+            return "";
         }
     }
 

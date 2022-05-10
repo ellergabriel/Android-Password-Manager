@@ -142,7 +142,7 @@ public final class Validator extends AppCompatActivity{
      * @return true if < 60 seconds since last login, false otherwise
      */
     public static boolean isSessionValid(){
-        return (System.currentTimeMillis() - Requestor.checkTimer() < 2);
+        return (System.currentTimeMillis() - Requestor.checkTimer() < 30000);
     }
 
     /**
