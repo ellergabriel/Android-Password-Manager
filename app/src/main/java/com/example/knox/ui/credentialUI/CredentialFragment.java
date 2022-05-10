@@ -30,7 +30,6 @@ import java.util.List;
 public class CredentialFragment extends Fragment {
 
     //Database db = Database.getInstance(getActivity());
-    List<Credentials> testing= Database.getInstance(getActivity()).getAllCreds();
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -62,7 +61,7 @@ public class CredentialFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        System.out.println(testing + " - CredentialFragment.java");
+        //System.out.println(testing + " - CredentialFragment.java");
     }
 
     @Override
@@ -85,7 +84,9 @@ public class CredentialFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 //            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(PlaceholderContent.ITEMS));
-            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(testing));
+            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(Database.
+                                                                        getInstance(getActivity()).
+                                                                        getAllCreds()));
         }
         return view;
     }

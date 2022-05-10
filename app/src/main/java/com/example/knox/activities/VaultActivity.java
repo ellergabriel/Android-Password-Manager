@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.knox.R;
 import com.example.knox.systemComponents.Credentials;
 import com.example.knox.systemComponents.Database;
+import com.example.knox.systemComponents.Requestor;
 import com.example.knox.ui.credentialUI.CredentialFragment;
 import com.example.knox.ui.generation.GenerationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.lang.ref.ReferenceQueue;
 import java.util.List;
 
 //Todo: make Credential list appear with correct title and editable
@@ -107,7 +109,9 @@ public class VaultActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Credentials cred = new Credentials (userEt.getText().toString(), passwordEt.getText().toString(), urlEt.getText().toString());
+                Credentials cred = new Credentials (userEt.getText().toString(),
+                                                    Requestor.encrypt(passwordEt.getText().toString()),
+                                                    urlEt.getText().toString());
                 Database.getInstance(getApplicationContext()).insert(cred);
                 Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
                 CredentialFragment credFrag = new CredentialFragment();

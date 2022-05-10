@@ -25,9 +25,6 @@ public interface PasswordDAO {
     @Query("SELECT * FROM credentials")
     List<Credentials> vaultDisplay();
 
-    @Insert(entity = Credentials.class, onConflict = OnConflictStrategy.ABORT)
-    void insertAll(Credentials creds);
-    
     @Delete
     void delete(Credentials cred);
 

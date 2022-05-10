@@ -115,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
         //create requestor object via singleton creation
         Requestor.getInstance();
 
-        //uncomment to clear DB for testing
+        /**
+        uncomment to clear DB for testing
+         **/
         //Database.getInstance(getApplicationContext()).deleteAll();
 
         //uncomment for access to debugger
