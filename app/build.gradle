@@ -41,6 +41,10 @@ dependencies {
     implementation 'androidx.biometric:biometric:1.1.0'
     implementation "androidx.room:room-runtime:2.4.2"
     annotationProcessor "androidx.room:room-compiler:2.4.2"
+
+    //below is the AES API, link here: https://github.com/scottyab/AESCrypt-Android
+    implementation 'com.scottyab:aescrypt:0.0.1'
+
     /**
      * Nav_map implementations; allows for construction of app flow but throwing errors during gradle sync
      * */
