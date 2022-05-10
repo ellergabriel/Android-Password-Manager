@@ -108,8 +108,7 @@ public class VaultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Credentials cred = new Credentials (userEt.getText().toString(), passwordEt.getText().toString(), urlEt.getText().toString());
-                Database db = Database.getInstance(getApplicationContext());
-                db.passDao().insert(cred);
+                Database.getInstance(getApplicationContext()).insert(cred);
                 Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
                 CredentialFragment credFrag = new CredentialFragment();
                 setFragment((credFrag));
