@@ -72,7 +72,7 @@ public final class Validator extends AppCompatActivity{
 
     /**
      * Method creates, displays, and authenticates user biometrics
-     * @param context current view user is on; should only ever be MainActivity
+     * @param context current view user is on
      */
     public void createPrompt(Context context){
         //Biometric prompt to user before accessing rest of app
@@ -85,7 +85,7 @@ public final class Validator extends AppCompatActivity{
                 Toast.makeText(context,
                         "Authentication error: " + errString, Toast.LENGTH_SHORT)
                         .show();
-                Validator.isValid = false;
+                //Validator.isValid = false;
             }
 
             @Override
@@ -93,7 +93,7 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(context,
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
-                Validator.isValid = true;
+                //Validator.isValid = true;
                 Requestor.setTimer();
             }
 
@@ -102,7 +102,7 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationFailed();
                 Toast.makeText(context, "Authentication failed",
                         Toast.LENGTH_SHORT).show();
-                Validator.isValid = false;
+                //Validator.isValid = false;
             }
         });
 
@@ -142,7 +142,7 @@ public final class Validator extends AppCompatActivity{
      * @return true if < 60 seconds since last login, false otherwise
      */
     public static boolean isSessionValid(){
-        return (System.currentTimeMillis() - Requestor.checkTimer() < 60000);
+        return (System.currentTimeMillis() - Requestor.checkTimer() < 2);
     }
 
     /**
