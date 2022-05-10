@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.assist.AssistStructure;
+import android.content.Context;
 import android.os.CancellationSignal;
 import android.service.autofill.AutofillService;
 import android.service.autofill.Dataset;
@@ -20,6 +21,7 @@ import android.widget.RemoteViews;
 
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.room.Room;
 
 import com.example.knox.R;
@@ -100,6 +102,9 @@ public final class Requestor extends AutofillService {
         if(!cred.getPasswd().equals("DNE")){
             try{
                 cred.setPasswd(AESCrypt.decrypt(key, cred.getPasswd()));
+                if(!Validator.isSessionValid()) {
+                    //Validator.getInstance().createPrompt(getApplicationContext().getApplicationContext());
+                }//checks for 60 second login window
             } catch (GeneralSecurityException g){/*do nothing*/}
         }
 
@@ -243,7 +248,9 @@ public final class Requestor extends AutofillService {
      * Autofill inheritance
      */
     class ActivityStarter extends Activity{
-        public ActivityStarter(){ }
+        public ActivityStarter(){
+
+        }
     }
 
 }

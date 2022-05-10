@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Validator.getInstance().createPrompt(this);
 
-        //Biometric prompt to user before accessing rest of app
-        //TODO: make Validator perform the following code
-        /*entire method is already written in the class, getting the prompt to display
-        * directly from main is the issue. Could be threading. */
 
        /*
         executor = ContextCompat.getMainExecutor(this);
@@ -104,18 +100,15 @@ public class MainActivity extends AppCompatActivity {
 
         biometricPrompt.authenticate(promptInfo); //prompt shows up on start up
         */
-        boolean isValid = false;
         Validator.getInstance().createPrompt(this);
         Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
-            if(Validator.getIsValid() && Validator.isSessionValid()){ //checks for 60 second login window
+            if(Validator.isSessionValid()){ //checks for 60 second login window
                 vaultMode();
             } else {
-                Toast.makeText(getApplicationContext(),
-                        "Authentication error: Invalid biometric, click and try again",
-                        Toast.LENGTH_SHORT)
-                        .show();
-                Validator.getInstance().createPrompt(this);
+                if (!Validator.isSessionValid()) {
+                    Validator.getInstance().createPrompt(this);
+                }
             }
         });
 
