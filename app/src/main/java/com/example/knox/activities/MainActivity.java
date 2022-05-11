@@ -54,11 +54,21 @@ public class MainActivity extends AppCompatActivity {
          */
         Database.getInstance(getApplicationContext());
 
-        //Validator.getInstance().createPrompt(this);
+
+        Button biometricLogin = findViewById(R.id.fp_button);
+
+        //biometricLogin.setOnClickListener(view -> {
+            //Validator.getInstance().createPrompt(this);
+            //vaultMode();
+        //});
+
+
+
 
 
        /*
         executor = ContextCompat.getMainExecutor(this);
+
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                           executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -102,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Validator.getInstance().createPrompt(this);
         Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
+
             if(Validator.isSessionValid()){ //checks for 60 second login window
                 vaultMode();
             } else {
@@ -110,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         //create requestor object via singleton creation
         Requestor.getInstance();
