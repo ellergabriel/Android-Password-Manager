@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button biometricLogin = findViewById(R.id.fp_button);
 
-        biometricLogin.setOnClickListener(view -> {
-            Validator.getInstance().createPrompt(this);
+        //biometricLogin.setOnClickListener(view -> {
+            //Validator.getInstance().createPrompt(this);
             //vaultMode();
-        });
+        //});
 
 
 
@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public void vaultMode(){
+    public void vaultMode(){
         Intent intent = new Intent(this, VaultActivity.class);
         startActivity(intent);
-    }*/
+    }
 
 }
