@@ -109,9 +109,12 @@ public class VaultActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userEt.getText().toString() == null ||
-                        passwordEt.getText().toString() == null ||
-                        urlEt.getText().toString() == null) {
+                System.out.println("Debug line\n");
+                if (Database.getInstance(getApplicationContext()).getFullCred(urlEt.getText().toString()) != null){
+                    Toast.makeText(getApplicationContext(), "Login tied to URL already exists", Toast.LENGTH_SHORT).show();
+                } else if (!userEt.getText().toString().equals("") &&
+                        !passwordEt.getText().toString().equals("") &&
+                        !urlEt.getText().toString().equals("") ) {
                     Credentials cred = new Credentials(userEt.getText().toString(),
                             Requestor.encrypt(passwordEt.getText().toString()),
                             urlEt.getText().toString());
