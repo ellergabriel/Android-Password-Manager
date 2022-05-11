@@ -119,7 +119,9 @@ public final class Validator extends AppCompatActivity{
         biometricPrompt.authenticate(promptInfo);
 
 
-
+        /**
+         * old code, moved to Validator for encapsulation
+         */
         /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View customView = getLayoutInflater().inflate(R.layout.login_popup, null, true);
         Button scanner = customView.findViewById(R.id.bioButton);
@@ -152,14 +154,5 @@ public final class Validator extends AppCompatActivity{
      */
     public static boolean isSessionValid(){
         return (System.currentTimeMillis() - Requestor.checkTimer() < 30000);
-    }
-
-
-    /**
-     *
-     * @param req Requestor object that stores session timer
-     */
-    private void startTimer(Requestor req){
-        //TODO: implement session timer for 30 second cutoff
     }
 }

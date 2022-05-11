@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.assist.AssistStructure;
 import android.content.Context;
 import android.os.CancellationSignal;
+import android.os.Handler;
 import android.service.autofill.AutofillService;
 import android.service.autofill.Dataset;
 import android.service.autofill.FillCallback;
@@ -56,9 +57,6 @@ public final class Requestor extends AutofillService {
 
     @Override
     public void onFillRequest(@NonNull FillRequest fillRequest, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback fillCallback) {
-        /*todo:check if session timer has ran out
-        if timer is out, show fingerprint prompt to user before continuing
-        else, keep it going*/
         boolean hasLogin = false;
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
@@ -94,12 +92,7 @@ public final class Requestor extends AutofillService {
 
 
         //Creates **** password text so user does not see password on autofill
-        int defaultSize = 12;
-        String dummy = "";
-        char holder = 46;
-        for(int i = 0; i < defaultSize; i++){
-            dummy += holder;
-        }
+        String dummy = "............";
 
         if(!cred.getPasswd().equals("DNE")){
             cred.setPasswd(decrypt(cred.getPasswd()));
@@ -115,6 +108,7 @@ public final class Requestor extends AutofillService {
             fillCallback.onFailure("failed to find autofill fields");
             return;
         }
+
         FillResponse fillResponse = new FillResponse.Builder()
                 .addDataset(new Dataset.Builder()
                         .setValue(parsedStruct.userID,
@@ -131,7 +125,7 @@ public final class Requestor extends AutofillService {
         fillCallback.onSuccess(fillResponse);
     }
 
-    //todo: once database is implemented, make onSaveRequest encrypt and save to the database
+
     @Override
     public void onSaveRequest(@NonNull SaveRequest saveRequest, @NonNull SaveCallback saveCallback) {
         // Get the structure from the request
@@ -215,13 +209,15 @@ public final class Requestor extends AutofillService {
                 if(!(child.getAutofillHints() == null) || !(tester == null)){
                     searchHTML(info);
                     //text field has some hint, check for id
-                    if(child.getHint().equals("Username") || searchHTML(info) == 1){
+                    if( (child.getHint().equals("Username") || searchHTML(info) == 1)
+                        && child.getAutofillHints() != null){
                         parser.userID = child.getAutofillId();
                         try {
                             //only for save requests; fill requests will always have the null pointer
                             capturedUName = (String) child.getAutofillValue().getTextValue();
                         } catch (NullPointerException n) { /*do nothing*/}
-                    } else if (child.getHint().equals("Password")|| searchHTML(info) == 2){
+                    } else if ( (child.getHint().equals("Password")|| searchHTML(info) == 2)
+                                && child.getAutofillHints() != null){
                         parser.passID = child.getAutofillId();
                         try {
                             //same as other try/catch
@@ -247,6 +243,7 @@ public final class Requestor extends AutofillService {
             return 0;
         }
         List<Pair<String, String>> att = h.getAttributes();
+        //htmlInfo[2] should always be the label header, change if not found
         String labels = att.get(2).second.toLowerCase();
         for(int i = 0; i < att.size(); i++){
             if(labels.contains("username") || labels.contains("email")){

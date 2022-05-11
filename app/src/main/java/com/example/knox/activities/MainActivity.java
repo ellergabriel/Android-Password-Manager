@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //prompts user to enable autofill from settings
                 //TODO: Autofill is supported but not enabled; prompt user
-
             }
         }
 
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         if (("Fingerprint operation canceled by user.").equals(errString)) {
                             System.out.println("Back button tester\n");
                         } else {
-                            //TODO: popup window with goodbye message as user has pressed 'Exit Knox'
+
                             Toast.makeText(getApplicationContext(),
                                     "Authentication error: " + errString, Toast.LENGTH_SHORT)
                                     .show();
@@ -133,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
         //Database.getInstance(getApplicationContext()).deleteAll();
 
         //uncomment for access to debugger
-        /*
+
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
             debugMode();
         });
-        */
+
     }
 
     public void debugMode(){
