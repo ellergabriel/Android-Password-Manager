@@ -6,6 +6,7 @@ import androidx.biometric.*;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.knox.R;
 import com.example.knox.activities.MainActivity;
+import com.example.knox.activities.VaultActivity;
 
 import java.util.concurrent.Executor;
 
@@ -93,8 +95,10 @@ public final class Validator extends AppCompatActivity{
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(context,
                         "Authentication succeeded!", Toast.LENGTH_SHORT).show();
+
                 //Validator.isValid = true;
                 Requestor.setTimer();
+
             }
 
             @Override
@@ -111,7 +115,9 @@ public final class Validator extends AppCompatActivity{
                 .setSubtitle("Log in with fingerprint")
                 .setNegativeButtonText("Cancel")
                 .build();
+
         biometricPrompt.authenticate(promptInfo);
+
 
 
         /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -121,7 +127,9 @@ public final class Validator extends AppCompatActivity{
         biometricLogin.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
         scanner.setOnClickListener(view -> {
             biometricPrompt.authenticate(promptInfo);
+
         }); */
+
         finish();
     }
 
@@ -131,6 +139,7 @@ public final class Validator extends AppCompatActivity{
         }
         return instance;
     }
+
 
     public static boolean getIsValid(){
         return Validator.isValid;
@@ -144,6 +153,7 @@ public final class Validator extends AppCompatActivity{
     public static boolean isSessionValid(){
         return (System.currentTimeMillis() - Requestor.checkTimer() < 30000);
     }
+
 
     /**
      *
