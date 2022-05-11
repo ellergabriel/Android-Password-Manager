@@ -39,7 +39,6 @@ public class DebugFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(DebugViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

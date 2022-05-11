@@ -146,12 +146,4 @@ public final class Validator extends AppCompatActivity{
     public static boolean isSessionValid(){
         return (System.currentTimeMillis() - Requestor.checkTimer() < 30000);
     }
-
-    /**
-     *
-     * @param req Requestor object that stores session timer
-     */
-    private void startTimer(Requestor req){
-        //TODO: implement session timer for 30 second cutoff
-    }
 }

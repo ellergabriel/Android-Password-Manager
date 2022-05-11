@@ -57,9 +57,6 @@ public final class Requestor extends AutofillService {
 
     @Override
     public void onFillRequest(@NonNull FillRequest fillRequest, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback fillCallback) {
-        /*todo:check if session timer has ran out
-        if timer is out, show fingerprint prompt to user before continuing
-        else, keep it going*/
         boolean hasLogin = false;
         //Structure from request
         List<FillContext> context = fillRequest.getFillContexts();
@@ -128,7 +125,7 @@ public final class Requestor extends AutofillService {
         fillCallback.onSuccess(fillResponse);
     }
 
-    //todo: once database is implemented, make onSaveRequest encrypt and save to the database
+
     @Override
     public void onSaveRequest(@NonNull SaveRequest saveRequest, @NonNull SaveCallback saveCallback) {
         // Get the structure from the request

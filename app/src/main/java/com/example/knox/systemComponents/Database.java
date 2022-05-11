@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
-//Todo: implement password generation algorithm
 @androidx.room.Database(entities = {Credentials.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 

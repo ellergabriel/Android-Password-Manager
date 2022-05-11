@@ -29,7 +29,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.lang.ref.ReferenceQueue;
 import java.util.List;
 
-//Todo: make Credential list appear with correct title and editable
+//Todo: make Credential list editable
 public class VaultActivity extends AppCompatActivity {
 
     @Override
@@ -109,14 +109,20 @@ public class VaultActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Credentials cred = new Credentials (userEt.getText().toString(),
-                                                    Requestor.encrypt(passwordEt.getText().toString()),
-                                                    urlEt.getText().toString());
-                Database.getInstance(getApplicationContext()).insert(cred);
-                Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
-                CredentialFragment credFrag = new CredentialFragment();
-                setFragment((credFrag));
-                dialog.dismiss();
+                if (userEt.getText().toString() == null ||
+                        passwordEt.getText().toString() == null ||
+                        urlEt.getText().toString() == null) {
+                    Credentials cred = new Credentials(userEt.getText().toString(),
+                            Requestor.encrypt(passwordEt.getText().toString()),
+                            urlEt.getText().toString());
+                    Database.getInstance(getApplicationContext()).insert(cred);
+                    Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
+                    CredentialFragment credFrag = new CredentialFragment();
+                    setFragment((credFrag));
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
