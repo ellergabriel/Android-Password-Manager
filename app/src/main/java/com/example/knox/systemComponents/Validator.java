@@ -113,7 +113,9 @@ public final class Validator extends AppCompatActivity{
                 .build();
         biometricPrompt.authenticate(promptInfo);
 
-
+        /**
+         * old code, moved to Validator for encapsulation
+         */
         /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View customView = getLayoutInflater().inflate(R.layout.login_popup, null, true);
         Button scanner = customView.findViewById(R.id.bioButton);

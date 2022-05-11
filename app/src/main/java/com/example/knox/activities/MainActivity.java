@@ -121,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
         //Database.getInstance(getApplicationContext()).deleteAll();
 
         //uncomment for access to debugger
-        /*
+
         Button debug = findViewById(R.id.debug_button);
         debug.setOnClickListener(view -> {
             debugMode();
         });
-        */
+
     }
 
     public void debugMode(){
