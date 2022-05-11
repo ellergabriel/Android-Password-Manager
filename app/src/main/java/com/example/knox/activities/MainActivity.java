@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         biometricPrompt.authenticate(promptInfo); //prompt shows up on start up
         */
         Validator.getInstance().createPrompt(this);
-        Button biometricLogin = findViewById(R.id.fp_button);
+        //Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
 
             if(Validator.isSessionValid()){ //checks for 60 second login window
