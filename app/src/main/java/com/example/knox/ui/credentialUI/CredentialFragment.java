@@ -70,9 +70,9 @@ public class CredentialFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
         //database creation; call dao.vaultDisplay() to get all credentials
-        Database db = Room.databaseBuilder(requireContext(), Database.class,
-                "credentials").allowMainThreadQueries().build();
-        PasswordDAO dao = db.passDao();
+        //Database db = Room.databaseBuilder(requireContext(), Database.class,
+         //       "credentials").allowMainThreadQueries().build();
+        //PasswordDAO dao = db.passDao();
 
         // Set the adapter
         if (view instanceof RecyclerView) {

@@ -17,9 +17,7 @@
 
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/service_configuration" />
-
-        <!-- Autofill service XML -->
+            android:resource="@xml/service_configuration" /> <!-- Autofill service XML -->
         <service
             android:name=".systemComponents.Requestor"
             android:exported="true"
@@ -31,9 +29,7 @@
             <meta-data
                 android:name="android.autofill"
                 android:resource="@xml/service_configuration" />
-        </service>
-        <!-- end autofill service xml -->
-
+        </service> <!-- end autofill service xml -->
         <activity
             android:name=".activities.DebugActivity"
             android:exported="false" />
