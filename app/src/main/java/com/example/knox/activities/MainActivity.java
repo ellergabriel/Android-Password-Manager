@@ -1,5 +1,6 @@
 package com.example.knox.activities;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
@@ -15,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.view.autofill.AutofillManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.net.URI;
 import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //prompts user to enable autofill from settings
                 //TODO: Autofill is supported but not enabled; prompt user
+                Intent settings = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
+
+                startActivity(settings);
             }
         }
 
@@ -54,17 +60,7 @@ public class MainActivity extends AppCompatActivity {
          */
         Database.getInstance(getApplicationContext());
 
-
         Button biometricLogin = findViewById(R.id.fp_button);
-
-        //biometricLogin.setOnClickListener(view -> {
-            //Validator.getInstance().createPrompt(this);
-            //vaultMode();
-        //});
-
-
-
-
 
        /*
         executor = ContextCompat.getMainExecutor(this);
@@ -114,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         }
         //Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
-
             if(Validator.isSessionValid()){ //checks for 60 second login window
                 vaultMode();
             } else {
@@ -136,9 +131,7 @@ public class MainActivity extends AppCompatActivity {
         //uncomment for access to debugger
 
         Button debug = findViewById(R.id.debug_button);
-        debug.setOnClickListener(view -> {
-            debugMode();
-        });
+        debug.setOnClickListener(view -> debugMode());
 
     }
 

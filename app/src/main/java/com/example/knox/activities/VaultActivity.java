@@ -29,7 +29,6 @@ import com.google.android.material.snackbar.Snackbar;
 import java.lang.ref.ReferenceQueue;
 import java.util.List;
 
-//Todo: make Credential list editable
 public class VaultActivity extends AppCompatActivity {
 
     @Override
@@ -42,38 +41,22 @@ public class VaultActivity extends AppCompatActivity {
         GenerationFragment genFrag = new GenerationFragment();
         setFragment((credFrag)); //added so credentials so up
 
-// insert commented out because already in the database and crashes because there's duplicate entries
-        List<Credentials> testing= Database.getInstance(getApplicationContext()).getAllCreds();
-        System.out.println(testing + " - VaultActivity.java");
-
         FloatingActionButton fab = findViewById(R.id.floatingActionButtonAdd);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                showCustomDialog();
+        fab.setOnClickListener(view -> showCustomDialog());
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            switch(id){
+                case(R.id.vault_tab):
+                    setFragment((credFrag));
+                    return true;
+                case(R.id.generation_tab):
+                    setFragment(genFrag);
+                    return true;
+                default:
+                    break;
             }
-        });
-
-
-
-        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id){
-                    case(R.id.vault_tab):
-                        setFragment((credFrag));
-                        return true;
-                    case(R.id.generation_tab):
-                        setFragment(genFrag);
-                        return true;
-                    default:
-                        break;
-                }
-                return true;
-            }
+            return true;
         });
     }
 
@@ -100,33 +83,25 @@ public class VaultActivity extends AppCompatActivity {
         Button cancelButton = dialog.findViewById(R.id.cancel_password);
 
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Debug line\n");
-                if (Database.getInstance(getApplicationContext()).getFullCred(urlEt.getText().toString()) != null){
-                    Toast.makeText(getApplicationContext(), "Login tied to URL already exists", Toast.LENGTH_SHORT).show();
-                } else if (!userEt.getText().toString().equals("") &&
-                        !passwordEt.getText().toString().equals("") &&
-                        !urlEt.getText().toString().equals("") ) {
-                    Credentials cred = new Credentials(userEt.getText().toString(),
-                            Requestor.encrypt(passwordEt.getText().toString()),
-                            urlEt.getText().toString());
-                    Database.getInstance(getApplicationContext()).insert(cred);
-                    Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
-                    CredentialFragment credFrag = new CredentialFragment();
-                    setFragment((credFrag));
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
-                }
+        submitButton.setOnClickListener(v -> {
+            System.out.println("Debug line\n");
+            if (Database.getInstance(getApplicationContext()).getFullCred(urlEt.getText().toString()) != null){
+                Toast.makeText(getApplicationContext(), "Login tied to URL already exists", Toast.LENGTH_SHORT).show();
+            } else if (!userEt.getText().toString().equals("") &&
+                    !passwordEt.getText().toString().equals("") &&
+                    !urlEt.getText().toString().equals("") ) {
+                Credentials cred = new Credentials(userEt.getText().toString(),
+                        Requestor.encrypt(passwordEt.getText().toString()),
+                        urlEt.getText().toString());
+                Database.getInstance(getApplicationContext()).insert(cred);
+                Toast.makeText(getApplicationContext(), "Added credential successfully", Toast.LENGTH_SHORT).show();
+                CredentialFragment credFrag = new CredentialFragment();
+                setFragment((credFrag));
+                dialog.dismiss();
+            } else {
+                Toast.makeText(getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
             }
         });
 
