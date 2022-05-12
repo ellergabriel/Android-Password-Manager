@@ -40,13 +40,11 @@ public class VaultActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.vault_nav);
         CredentialFragment credFrag = new CredentialFragment();
         GenerationFragment genFrag = new GenerationFragment();
-
         setFragment((credFrag)); //added so credentials so up
 
 // insert commented out because already in the database and crashes because there's duplicate entries
         List<Credentials> testing= Database.getInstance(getApplicationContext()).getAllCreds();
         System.out.println(testing + " - VaultActivity.java");
-
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButtonAdd);
         fab.setOnClickListener(new View.OnClickListener() {

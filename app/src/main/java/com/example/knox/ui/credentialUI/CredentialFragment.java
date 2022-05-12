@@ -62,8 +62,6 @@ public class CredentialFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-        //System.out.println(testing + " - CredentialFragment.java");
     }
 
     @Override
@@ -71,12 +69,6 @@ public class CredentialFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         TextView content = new TextView(container.getContext());
-        //content.findViewById(R.id.content);
-        //content.setEllipsize(TextUtils.TruncateAt.END);
-        //database creation; call dao.vaultDisplay() to get all credentials
-        //Database db = Room.databaseBuilder(requireContext(), Database.class,
-         //       "credentials").allowMainThreadQueries().build();
-        //PasswordDAO dao = db.passDao();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -87,7 +79,6 @@ public class CredentialFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-//            recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(PlaceholderContent.ITEMS));
             recyclerView.setAdapter(new MyCredentialRecyclerViewAdapter(Database.
                                                                         getInstance(getActivity()).
                                                                         getAllCreds()));
