@@ -2,12 +2,16 @@ package com.example.knox.ui.credentialUI;
 
 import static com.example.knox.systemComponents.Requestor.decrypt;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,7 +113,6 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                         }
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -117,6 +120,9 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
             @Override
             public void onClick(View view) {
                 //todo: popup window to delete a credential
+                Credentials credit = Database.getInstance(holder.edit.getContext())
+                        .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
+                Database.getInstance(holder.edit.getContext()).delete(credit);
             }
         });
         //holder.itemView.setOnClickListener(holder.);
@@ -148,6 +154,13 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
         @Override
         public String toString() {
             return super.toString() + " '"/* + mContentView.getText() + "'"*/;
+        }
+    }
+
+    public class FragmentStarter extends AppCompatActivity{
+        public FragmentStarter(){}
+        public FragmentManager getFT(){
+            return this.getSupportFragmentManager();
         }
     }
 }
