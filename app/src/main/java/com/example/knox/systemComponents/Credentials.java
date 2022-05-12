@@ -60,4 +60,10 @@ public class Credentials {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+    public boolean equals(Credentials c){
+        return (c.getUrl().equals(this.url)
+                && c.getPasswd().equals(this.passwd)
+                && c.getUName().equals(this.uName));
+    }
 }

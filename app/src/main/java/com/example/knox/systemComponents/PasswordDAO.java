@@ -6,6 +6,7 @@ import androidx.room.DeleteTable;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -30,8 +31,6 @@ public interface PasswordDAO {
 
     @Query("DELETE FROM credentials")
     void deleteAll();
-
-    //new
 
     /**
      * Insertion will replace any existing URL; should only be called by onSaveRequest in Requestor

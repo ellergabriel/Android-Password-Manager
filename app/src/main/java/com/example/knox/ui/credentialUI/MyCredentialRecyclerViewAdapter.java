@@ -72,11 +72,11 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                 Button submitButton = dialog.findViewById(R.id.add_password);
                 Button cancelButton = dialog.findViewById(R.id.cancel_password);
 
-                Credentials cred = Database.getInstance(dialog.getOwnerActivity())
+                Credentials credit = Database.getInstance(dialog.getOwnerActivity())
                         .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
-                urlEt.setText(cred.getUrl());
-                userEt.setText(cred.getUName());
-                passwordEt.setText(decrypt(cred.getPasswd()));
+                urlEt.setText(credit.getUrl());
+                userEt.setText(credit.getUName());
+                passwordEt.setText(decrypt(credit.getPasswd()));
 
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -88,7 +88,23 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        if (!userEt.getText().toString().equals("") &&
+                                !passwordEt.getText().toString().equals("") &&
+                                !urlEt.getText().toString().equals("")) {
+                            Credentials cred = new Credentials(userEt.getText().toString(),
+                                    Requestor.encrypt(passwordEt.getText().toString()),
+                                    urlEt.getText().toString());
+                            if(!cred.equals(credit)) {
+                                Database.getInstance(dialog.getOwnerActivity()).delete(credit);
+                                Database.getInstance(dialog.getOwnerActivity()).insert(cred);
+                                Toast.makeText(holder.edit.getContext(), "Added edited successfully", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            } else{
+                                Toast.makeText(holder.edit.getContext(), "No changes detected", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(dialog.getOwnerActivity().getApplicationContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
