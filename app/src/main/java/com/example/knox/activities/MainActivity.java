@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
             //uncomment for access to debugger
 
-            Button debug = findViewById(R.id.debug_button);
-            debug.setOnClickListener(view -> debugMode());
+            //Button debug = findViewById(R.id.debug_button);
+            //debug.setOnClickListener(view -> debugMode());
 
         }
     }

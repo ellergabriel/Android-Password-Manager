@@ -130,9 +130,7 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                         .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
                 Database.getInstance(holder.edit.getContext()).delete(credit);
                 Toast.makeText(holder.edit.getContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
-
                 AppCompatActivity activity = (AppCompatActivity) context;
                 CredentialFragment credentialFragment = new CredentialFragment();
                 activity.getSupportFragmentManager().beginTransaction().
