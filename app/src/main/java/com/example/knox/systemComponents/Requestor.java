@@ -85,7 +85,8 @@ public final class Requestor extends AutofillService {
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         //dao.insertAll(new Credentials("eller010", "password", parsedStruct.URL));
-        Credentials cred = dao.getFullCred(parsedStruct.URL);
+        //Credentials cred = dao.getFullCred(parsedStruct.URL);
+        Credentials cred = Database.getInstance(getApplicationContext()).getFullCred(parsedStruct.URL);
 
         if(cred == null){
             cred = new Credentials("NA","NA","");
@@ -99,7 +100,6 @@ public final class Requestor extends AutofillService {
             cred.setPasswd(decrypt(cred.getPasswd()));
             if(!Validator.isSessionValid()) {
                 //Validator.getInstance().createPrompt(getApplicationContext().getApplicationContext());
-                Intent authIntent = new Intent(this, Validator.class);
             }//checks for 60 second login window
         }
 
@@ -211,15 +211,15 @@ public final class Requestor extends AutofillService {
                 }
                 if(!(child.getAutofillHints() == null) || !(tester == null)){
                     //text field has some hint, check for id
-                    if( (child.getHint().equals("Username")&& child.getAutofillHints() != null)
-                            || searchHTML(info) == 1){
+                    if( (child.getHint().equals("Username") || searchHTML(info) == 1)
+                        && (child.getAutofillId() != null)){
                         parser.userID = child.getAutofillId();
                         try {
                             //only for save requests; fill requests will always have the null pointer
                             capturedUName = (String) child.getAutofillValue().getTextValue();
                         } catch (NullPointerException n) { /*do nothing*/}
-                    } else if ( (child.getHint().equals("Password") && child.getAutofillHints() != null)
-                            || searchHTML(info) == 2){
+                    } else if ( (child.getHint().equals("Password")|| searchHTML(info) == 2)
+                                && child.getAutofillId() != null){
                         parser.passID = child.getAutofillId();
                         try {
                             //same as other try/catch
@@ -239,7 +239,7 @@ public final class Requestor extends AutofillService {
      * @return 0 if no labels are found, 1 for username label, 2 for password label
      */
     public static int searchHTML(ViewStructure.HtmlInfo h){
-        if(h == null){
+        if(h == null || h.getAttributes() == null){
             return 0;
         }
         List<Pair<String, String>> att = h.getAttributes();
