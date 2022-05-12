@@ -68,7 +68,6 @@ public class CredentialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-        TextView content = new TextView(container.getContext());
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -83,7 +82,6 @@ public class CredentialFragment extends Fragment {
                                                                         getInstance(getActivity()).
                                                                         getAllCreds()));
         }
-
         return view;
     }
 }
