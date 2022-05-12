@@ -42,9 +42,11 @@ public class VaultActivity extends AppCompatActivity {
         GenerationFragment genFrag = new GenerationFragment();
 
         setFragment((credFrag)); //added so credentials so up
+
 // insert commented out because already in the database and crashes because there's duplicate entries
         List<Credentials> testing= Database.getInstance(getApplicationContext()).getAllCreds();
         System.out.println(testing + " - VaultActivity.java");
+
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButtonAdd);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +57,8 @@ public class VaultActivity extends AppCompatActivity {
                 showCustomDialog();
             }
         });
+
+
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -90,7 +94,6 @@ public class VaultActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         //Mention the name of the layout of your custom dialog.
         dialog.setContentView(R.layout.password_dialog);
-
         //Initializing the views of the dialog.
         final EditText urlEt = dialog.findViewById(R.id.etURL);
         final EditText userEt = dialog.findViewById(R.id.etEmail);

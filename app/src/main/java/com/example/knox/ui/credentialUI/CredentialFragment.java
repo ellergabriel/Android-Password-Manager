@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.knox.R;
 
@@ -56,7 +59,6 @@ public class CredentialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -68,7 +70,9 @@ public class CredentialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
+        TextView content = new TextView(container.getContext());
+        //content.findViewById(R.id.content);
+        //content.setEllipsize(TextUtils.TruncateAt.END);
         //database creation; call dao.vaultDisplay() to get all credentials
         //Database db = Room.databaseBuilder(requireContext(), Database.class,
          //       "credentials").allowMainThreadQueries().build();
@@ -88,6 +92,7 @@ public class CredentialFragment extends Fragment {
                                                                         getInstance(getActivity()).
                                                                         getAllCreds()));
         }
+
         return view;
     }
 }
