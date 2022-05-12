@@ -10,4 +10,5 @@
     <string name="bioprompt">Access Vault</string>
     <string name="vault_tab">Vault</string>
     <string name="generation_tab">Generation</string>
+    <string name="settings_prompt">Please enable autofill in system -> languages -> advanced</string>
 </resources>
