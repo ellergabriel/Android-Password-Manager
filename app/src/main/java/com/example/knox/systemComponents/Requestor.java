@@ -3,9 +3,11 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.app.assist.AssistStructure;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.service.autofill.AutofillService;
@@ -65,12 +67,6 @@ public final class Requestor extends AutofillService {
 
         ParsedStructure parsedStruct = new ParsedStructure();
 
-        //todo: add threading support so database is not called on main thread
-        //      it works for now, but stresses the system
-        Database db = Room.databaseBuilder(getApplicationContext(), Database.class,
-                                            "credentials").allowMainThreadQueries().build();
-        PasswordDAO dao = db.passDao();
-
         /*** Debugging section for database functionality
         dao.insertAll(new Credentials("shazbot", "shazbot", "shazbot.com"));
         List<Credentials> tester = dao.vaultDisplay();
@@ -81,6 +77,7 @@ public final class Requestor extends AutofillService {
 
         //fetching user data from AssistStructure
         parseStructure(structure, parsedStruct);
+
 
         RemoteViews userNamePresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
         RemoteViews passwordPresentation = new RemoteViews(this.getPackageName(), android.R.layout.simple_list_item_1);
@@ -197,7 +194,7 @@ public final class Requestor extends AutofillService {
                 String tester = child.getHint();
                 ViewStructure.HtmlInfo info = child.getHtmlInfo();
                 if(info != null){
-                    System.out.println(info.getAttributes().toString());
+                    //System.out.println(info.getAttributes().toString());
                 }
                 if(child.getWebDomain() != null){ //webdomain will only be sent once, safe to assign
                                                  //to parsedStructure

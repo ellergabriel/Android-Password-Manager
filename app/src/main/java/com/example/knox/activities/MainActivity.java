@@ -1,22 +1,16 @@
 package com.example.knox.activities;
 
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
 import android.os.Bundle;
 import com.example.knox.R;
 import com.example.knox.databinding.ActivityMainBinding;
 import com.example.knox.systemComponents.Database;
-import com.example.knox.systemComponents.PasswordDAO;
 import com.example.knox.systemComponents.Requestor;
 import com.example.knox.systemComponents.Validator;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.Window;
 import android.view.autofill.AutofillManager;
@@ -24,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.URI;
 import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
@@ -123,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             biometricPrompt.authenticate(promptInfo); //prompt shows up on start up
             */
             if (!Validator.isSessionValid()) {
-                Validator.getInstance().createPrompt(this);
+                Validator.getInstance().createPrompt(this, false);
             }
             //Button biometricLogin = findViewById(R.id.fp_button);
             biometricLogin.setOnClickListener(view -> {
@@ -131,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     vaultMode();
                 } else {
                     if (!Validator.isSessionValid()) {
-                        Validator.getInstance().createPrompt(this);
+                        Validator.getInstance().createPrompt(this, false);
                     }
                 }
             });

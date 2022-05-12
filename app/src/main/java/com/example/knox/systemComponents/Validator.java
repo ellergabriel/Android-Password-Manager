@@ -7,8 +7,10 @@ import androidx.biometric.*;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +32,9 @@ public final class Validator extends AppCompatActivity{
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private static volatile Validator instance = null;
-    private Validator(){}
+    public Validator(){}
     private static boolean isValid = false;
-    /**
-     * Method ensures user has proper biometric authentication enabled
-     * @param context When calling the method, pass in the current context
-     */
+
     private void checkBioMetricSupported(Context context){
         String info = "";
         BiometricManager manager = BiometricManager.from(context);
@@ -78,7 +77,7 @@ public final class Validator extends AppCompatActivity{
      * Method creates, displays, and authenticates user biometrics
      * @param context current view user is on
      */
-    public void createPrompt(Context context){
+    public void createPrompt(Context context, boolean isAutofill){
         //Biometric prompt to user before accessing rest of app
         executor = ContextCompat.getMainExecutor(context);
         biometricPrompt = new BiometricPrompt((FragmentActivity) context,
