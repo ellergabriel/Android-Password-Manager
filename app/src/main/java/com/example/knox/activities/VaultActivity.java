@@ -56,6 +56,8 @@ public class VaultActivity extends AppCompatActivity {
             }
         });
 
+
+
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,7 +92,6 @@ public class VaultActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         //Mention the name of the layout of your custom dialog.
         dialog.setContentView(R.layout.password_dialog);
-
         //Initializing the views of the dialog.
         final EditText urlEt = dialog.findViewById(R.id.etURL);
         final EditText userEt = dialog.findViewById(R.id.etEmail);

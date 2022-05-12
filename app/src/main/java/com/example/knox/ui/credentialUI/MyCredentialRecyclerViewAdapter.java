@@ -41,7 +41,8 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = allCreds.get(position);
         holder.mIdView.setText(allCreds.get(position).url);
-        holder.mContentView.setText(allCreds.get(position).uName);
+
+        //holder.mContentView.setText(allCreds.get(position).uName);
 //        holder.mIdView.setText(mValues.get(position).id);
 //        holder.mContentView.setText(mValues.get(position).content);
     }
@@ -53,18 +54,18 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
-        public final TextView mContentView;
+        //public final TextView mContentView;
         public Credentials mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
             super(binding.getRoot());
             mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            //mContentView = binding.content;
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '"/* + mContentView.getText() + "'"*/;
         }
     }
 }
