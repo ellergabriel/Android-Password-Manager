@@ -109,7 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
         biometricPrompt.authenticate(promptInfo); //prompt shows up on start up
         */
-        Validator.getInstance().createPrompt(this);
+        if(!Validator.isSessionValid()) {
+            Validator.getInstance().createPrompt(this);
+        }
         //Button biometricLogin = findViewById(R.id.fp_button);
         biometricLogin.setOnClickListener(view -> {
 
