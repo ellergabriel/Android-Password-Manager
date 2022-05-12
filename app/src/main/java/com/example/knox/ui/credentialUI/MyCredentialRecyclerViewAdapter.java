@@ -97,6 +97,10 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                         Database.getInstance(dialog.getOwnerActivity()).insert(cred);
                         Toast.makeText(holder.edit.getContext(), "Added edited successfully", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        AppCompatActivity activity = (AppCompatActivity) context;
+                        CredentialFragment credentialFragment = new CredentialFragment();
+                        activity.getSupportFragmentManager().beginTransaction().
+                                replace(R.id.vault_gen_frame, credentialFragment).addToBackStack(null).commit();
                     } else{
                         Toast.makeText(holder.edit.getContext(), "No changes detected", Toast.LENGTH_SHORT).show();
                     }
@@ -131,7 +135,8 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
 
                 AppCompatActivity activity = (AppCompatActivity) context;
                 CredentialFragment credentialFragment = new CredentialFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.vault_gen_frame, credentialFragment).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().
+                        replace(R.id.vault_gen_frame, credentialFragment).addToBackStack(null).commit();
             });
 
             deny.setOnClickListener(view1 -> dialog.dismiss());
