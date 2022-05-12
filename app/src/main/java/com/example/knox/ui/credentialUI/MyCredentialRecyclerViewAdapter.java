@@ -2,18 +2,25 @@ package com.example.knox.ui.credentialUI;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.knox.R;
+import com.example.knox.activities.VaultActivity;
 import com.example.knox.systemComponents.Credentials;
+import com.example.knox.systemComponents.Database;
+import com.example.knox.systemComponents.Requestor;
 import com.example.knox.ui.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.knox.databinding.FragmentItemBinding;
 
-import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
@@ -47,6 +54,51 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
             @Override
             public void onClick(View view) {
                 //todo: popup window to edit the login
+                final Dialog dialog = new Dialog(holder.edit.getContext());
+                //We have added a title in the custom layout. So let's disable the default title.
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+                dialog.setCancelable(true);
+                //Mention the name of the layout of your custom dialog.
+                dialog.setContentView(R.layout.password_dialog);
+                //Initializing the views of the dialog.
+                final EditText urlEt = dialog.findViewById(R.id.etURL);
+                final EditText userEt = dialog.findViewById(R.id.etEmail);
+                final EditText passwordEt = dialog.findViewById(R.id.etPassword);
+                Button submitButton = dialog.findViewById(R.id.add_password);
+                Button cancelButton = dialog.findViewById(R.id.cancel_password);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Debug line\n");
+                        if (com.example.knox.systemComponents.Database.getInstance(dialog.getOwnerActivity()).getFullCred(urlEt.getText().toString()) != null){
+                            Toast.makeText(dialog.getOwnerActivity(), "Login tied to URL already exists", Toast.LENGTH_SHORT).show();
+                        } else if (!userEt.getText().toString().equals("") &&
+                                !passwordEt.getText().toString().equals("") &&
+                                !urlEt.getText().toString().equals("") ) {
+                            Credentials cred = new Credentials(userEt.getText().toString(),
+                                    Requestor.encrypt(passwordEt.getText().toString()),
+                                    urlEt.getText().toString());
+                            Database.getInstance(dialog.getOwnerActivity()).insert(cred);
+                            Toast.makeText(dialog.getOwnerActivity(), "Added credential successfully", Toast.LENGTH_SHORT).show();
+                            CredentialFragment credFrag = new CredentialFragment();
+                            //setFragment((credFrag));
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(dialog.getOwnerActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                dialog.show();
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
