@@ -8,7 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
+import android.content.ContextWrapper;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,8 @@ import java.util.List;
 public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCredentialRecyclerViewAdapter.ViewHolder> {
 
     private final List<Credentials> allCreds;
+
+    Context context;
 
     public MyCredentialRecyclerViewAdapter(List<Credentials> creds) {
         allCreds = creds;
@@ -123,7 +126,12 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                         .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
                 Database.getInstance(holder.edit.getContext()).delete(credit);
                 Toast.makeText(holder.edit.getContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
+
                 dialog.dismiss();
+
+                AppCompatActivity activity = (AppCompatActivity) context;
+                CredentialFragment credentialFragment = new CredentialFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.vault_gen_frame, credentialFragment).addToBackStack(null).commit();
             });
 
             deny.setOnClickListener(view1 -> dialog.dismiss());
@@ -143,9 +151,10 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
         public Credentials mItem;
         public final Button edit;
         public final Button delete;
-        public Context cont;
+//        public Context cont;
         public ViewHolder(FragmentItemBinding binding) {
             super(binding.getRoot());
+            context = binding.getRoot().getContext();
             mIdView = binding.itemNumber;
             edit = binding.editButton;
             delete = binding.deleteButton;
