@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,10 +120,37 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo: popup window to delete a credential
-                Credentials credit = Database.getInstance(holder.edit.getContext())
-                        .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
-                Database.getInstance(holder.edit.getContext()).delete(credit);
+
+                //create popup window
+                final Dialog dialog = new Dialog(holder.edit.getContext());
+                //We have added a title in the custom layout. So let's disable the default title.
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                //The user will be able to cancel the dialog bu clicking anywhere outside the dialog.
+                dialog.setCancelable(true);
+                //Mention the name of the layout of your custom dialog.
+                dialog.setContentView(R.layout.delete_dialog);
+                Button confirm = dialog.findViewById(R.id.delete_confirm);
+                Button deny = dialog.findViewById(R.id.delete_deny);
+                deny.setBackgroundColor(Color.RED);
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Credentials credit = Database.getInstance(holder.edit.getContext())
+                                .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
+                        Database.getInstance(holder.edit.getContext()).delete(credit);
+                        Toast.makeText(holder.edit.getContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                deny.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
         //holder.itemView.setOnClickListener(holder.);
@@ -147,8 +175,9 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
             super(binding.getRoot());
             mIdView = binding.itemNumber;
             edit = binding.editButton;
+            //edit.setBackgroundColor(Color.GRAY);
             delete = binding.deleteButton;
-            //mContentView = binding.content;
+            delete.setBackgroundColor(Color.RED);
         }
 
         @Override
