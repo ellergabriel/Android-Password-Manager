@@ -46,9 +46,11 @@ public class Credentials {
 
     public String getUName() {return this.uName;}
     public String getPasswd(){return this.passwd;}
+    public String getUrl(){return this.url;}
 
     public void setuName(String name){this.uName = name;}
     public void setPasswd(String pass){this.passwd = pass;}
+    public void setUrl(String URL){this.url = URL;}
 //
     @Override
     public String toString() {
