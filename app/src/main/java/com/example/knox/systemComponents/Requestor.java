@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.assist.AssistStructure;
 import android.content.Context;
+import android.content.Intent;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.service.autofill.AutofillService;
@@ -87,25 +88,27 @@ public final class Requestor extends AutofillService {
         Credentials cred = dao.getFullCred(parsedStruct.URL);
 
         if(cred == null){
-            cred = new Credentials("DNE","DNE","");
+            cred = new Credentials("NA","NA","");
         }
 
 
-        //Creates **** password text so user does not see password on autofill
+        //dummy string so password isn't shown during fill
         String dummy = "............";
 
-        if(!cred.getPasswd().equals("DNE")){
+        if(!cred.getPasswd().equals("NA")){
             cred.setPasswd(decrypt(cred.getPasswd()));
             if(!Validator.isSessionValid()) {
                 //Validator.getInstance().createPrompt(getApplicationContext().getApplicationContext());
+                Intent authIntent = new Intent(this, Validator.class);
             }//checks for 60 second login window
         }
 
         userNamePresentation.setTextViewText(android.R.id.text1, cred.getUName());
         passwordPresentation.setTextViewText(android.R.id.text1, dummy);
-        //Adds dataset with credentials to response
+
         if(parsedStruct.userID == null || parsedStruct.passID == null){
-            fillCallback.onFailure("failed to find autofill fields");
+            /**debugging only**/
+            //fillCallback.onFailure("failed to find autofill fields");
             return;
         }
 
@@ -207,25 +210,22 @@ public final class Requestor extends AutofillService {
                             recursive function is not as optimized*/
                 }
                 if(!(child.getAutofillHints() == null) || !(tester == null)){
-                    searchHTML(info);
                     //text field has some hint, check for id
-                    if( (child.getHint().equals("Username") || searchHTML(info) == 1)
-                        && child.getAutofillHints() != null){
+                    if( (child.getHint().equals("Username")&& child.getAutofillHints() != null)
+                            || searchHTML(info) == 1){
                         parser.userID = child.getAutofillId();
                         try {
                             //only for save requests; fill requests will always have the null pointer
                             capturedUName = (String) child.getAutofillValue().getTextValue();
                         } catch (NullPointerException n) { /*do nothing*/}
-                    } else if ( (child.getHint().equals("Password")|| searchHTML(info) == 2)
-                                && child.getAutofillHints() != null){
+                    } else if ( (child.getHint().equals("Password") && child.getAutofillHints() != null)
+                            || searchHTML(info) == 2){
                         parser.passID = child.getAutofillId();
                         try {
                             //same as other try/catch
                             capturedPassword = (String) child.getAutofillValue().getTextValue();
                             capturedPassword = encrypt(capturedPassword);
-                        } catch (NullPointerException n){
-                            /*do nothing, again*/
-                        }
+                        } catch (NullPointerException n) {/*do nothing, again*/}
                     }
                 }
             }

@@ -44,7 +44,8 @@ public final class Validator extends AppCompatActivity{
          * different library was being used. androidx.biometric.* is what was needed
          */
 
-        switch (manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.BIOMETRIC_STRONG))
+        switch (manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK
+                                                  | BiometricManager.Authenticators.BIOMETRIC_STRONG))
         {
             case BiometricManager.BIOMETRIC_SUCCESS:
                 info = "Biometric authentication is available";
@@ -71,6 +72,7 @@ public final class Validator extends AppCompatActivity{
                 break;
         }
     }
+
 
     /**
      * Method creates, displays, and authenticates user biometrics
@@ -148,7 +150,7 @@ public final class Validator extends AppCompatActivity{
     }
 
     /**
-     * Checks Requestor timer to make sure session has been going for only < 60 seconds
+     * Checks Requestor timer to make sure session has been going for only < 30 seconds
      * Uses system time as a constant
      * @return true if < 60 seconds since last login, false otherwise
      */
