@@ -213,14 +213,14 @@ public final class Requestor extends AutofillService {
                     //text field has some hint, check for id
                     if( (child.getHint().equals("Username") || searchHTML(info) == 1)
                         && (child.getAutofillId() != null)){
-                        parser.userID = child.getAutofillId();
+                        parser.userID = (parser.userID == null) ? child.getAutofillId() : parser.userID;
                         try {
                             //only for save requests; fill requests will always have the null pointer
                             capturedUName = (String) child.getAutofillValue().getTextValue();
                         } catch (NullPointerException n) { /*do nothing*/}
                     } else if ( (child.getHint().equals("Password")|| searchHTML(info) == 2)
                                 && child.getAutofillId() != null){
-                        parser.passID = child.getAutofillId();
+                        parser.passID = (parser.passID == null) ? child.getAutofillId() : parser.passID;
                         try {
                             //same as other try/catch
                             capturedPassword = (String) child.getAutofillValue().getTextValue();

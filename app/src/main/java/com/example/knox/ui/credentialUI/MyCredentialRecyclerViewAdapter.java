@@ -117,6 +117,7 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                 dialog.show();
             }
         });
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,7 +141,9 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                                 .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
                         Database.getInstance(holder.edit.getContext()).delete(credit);
                         Toast.makeText(holder.edit.getContext(), "Credential deleted", Toast.LENGTH_SHORT).show();
+
                         dialog.dismiss();
+
                     }
                 });
 
@@ -153,10 +156,6 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
                 dialog.show();
             }
         });
-        //holder.itemView.setOnClickListener(holder.);
-        //holder.mContentView.setText(allCreds.get(position).uName);
-//        holder.mIdView.setText(mValues.get(position).id);
-//        holder.mContentView.setText(mValues.get(position).content);
     }
 
 
@@ -175,7 +174,6 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
             super(binding.getRoot());
             mIdView = binding.itemNumber;
             edit = binding.editButton;
-            //edit.setBackgroundColor(Color.GRAY);
             delete = binding.deleteButton;
             delete.setBackgroundColor(Color.RED);
         }
@@ -186,10 +184,4 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
         }
     }
 
-    public class FragmentStarter extends AppCompatActivity{
-        public FragmentStarter(){}
-        public FragmentManager getFT(){
-            return this.getSupportFragmentManager();
-        }
-    }
 }
