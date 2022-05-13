@@ -76,7 +76,9 @@ public class MyCredentialRecyclerViewAdapter extends RecyclerView.Adapter<MyCred
             final EditText passwordEt = dialog.findViewById(R.id.etPassword);
             Button submitButton = dialog.findViewById(R.id.add_password);
             Button cancelButton = dialog.findViewById(R.id.cancel_password);
-
+            submitButton.setText("Edit");
+            submitButton.setBackgroundColor(Color.GREEN);
+            cancelButton.setBackgroundColor(Color.RED);
             Credentials credit = Database.getInstance(dialog.getOwnerActivity())
                     .getFullCred(allCreds.get(holder.getBindingAdapterPosition()).url);
             urlEt.setText(credit.getUrl());
